@@ -28,6 +28,7 @@ private:
 	void attack();
 	void moving(float delta);
 	bool findSomethingToEat();
+	void setSprite(CCSprite* sprite);
 
 	CCAnimation *m_animationAtEase;
 	CCAnimation *m_animationAttack;

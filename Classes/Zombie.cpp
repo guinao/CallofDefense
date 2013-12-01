@@ -68,7 +68,7 @@ Zombie* Zombie::createZombie(ZombieType type, CCPoint pos)
 		sprite->setPosition(pos);
 
 		p->addChild(sprite);
-
+		p->setSprite(sprite);
 
 
 		CCArray* animFrames = CCArray::createWithCapacity(numFrames);
@@ -143,7 +143,7 @@ bool Zombie::findSomethingToEat()
 
 	ZombieManager* p = dynamic_cast<ZombieManager*>(getParent());
 	DemoScene* ds = dynamic_cast<DemoScene*>(p->getParent());
-	Plant* plant = ds->findPlantInRange(this->boundingBox());
+	Plant* plant = ds->findPlantInRange(m_sprite->boundingBox());
 
 	if(NULL != plant)
 	{
@@ -153,4 +153,12 @@ bool Zombie::findSomethingToEat()
 	}
 
 	return bRet;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void Zombie::setSprite(CCSprite* sprite)
+{
+	m_sprite = sprite;
+	m_sprite->retain();
 }
