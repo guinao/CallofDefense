@@ -44,7 +44,7 @@ enum GameState
 
 enum StateInSpace
 {
-	en_Floating,
+	en_Floating = 1,
 	en_InShield
 };
 

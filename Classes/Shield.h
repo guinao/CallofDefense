@@ -14,7 +14,9 @@ class Shield : public CCLayer
 public:
 	Shield();
 	~Shield();
-	CREATE_FUNC(Shield);
+
+	static Shield* getShieldSingleton();
+
 	virtual bool init();
 
 	virtual void update(float delta);
@@ -25,8 +27,10 @@ public:
 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
 	virtual void ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent);
 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
-
+	
+	void getCenterAndRadius(float &r, float &x, float &y);
 private:
+	CREATE_FUNC(Shield);
 	void drawShieldRegion();
 
 	CCSprite* m_sprite;
@@ -36,6 +40,7 @@ private:
 	float m_radius;
 	bool m_touched;
 
+	static Shield *m_shield;
 };
 
 #endif

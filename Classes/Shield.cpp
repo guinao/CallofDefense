@@ -1,5 +1,7 @@
 #include "Shield.h"
 
+Shield* Shield::m_shield = NULL;
+
 Shield::Shield()
 {
 	m_touched = false;
@@ -8,6 +10,20 @@ Shield::Shield()
 
 Shield::~Shield()
 {
+}
+
+Shield* Shield::getShieldSingleton()
+{
+	if(NULL == m_shield)
+	{
+		m_shield = Shield::create();
+		if(NULL != m_shield)
+		{
+			m_shield->autorelease();
+		}
+	}
+
+	return m_shield;
 }
 
 bool Shield::init()
@@ -104,4 +120,11 @@ void Shield::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 void Shield::ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent)
 {
 	m_touched = false;
+}
+
+void Shield::getCenterAndRadius(float &r, float &x, float &y)
+{
+	r = m_radius;
+	x = m_sprite->getPositionX();
+	y = m_sprite->getPositionY();
 }

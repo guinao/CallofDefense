@@ -2,13 +2,15 @@
 
 SpaceAdventureScene::SpaceAdventureScene()
 {
+	CC_SAFE_RETAIN(Shield::getShieldSingleton());
+
 	m_maxshakevalue = 0.0;
 	m_shakevaluebound = 10.0;
 }
 
 SpaceAdventureScene::~SpaceAdventureScene()
 {
-
+//	CC_SAFE_RELEASE(Shield::getShieldSingleton());
 }
 
 CCScene* SpaceAdventureScene::scene()
@@ -80,18 +82,17 @@ void SpaceAdventureScene::didAccelerate(CCAcceleration* pAccelerationValue)
 	double z = pAccelerationValue->z;
 	double all = x*x + y*y + z*z;
 
-	sprintf(output, "%f, %f, %f", x, y, z);
+	sprintf(output, "SpaceAdventureScene::didAccelerate:%f, %f, %f", x, y, z);
 	CCLOG(output);
 
-	m_nut->changeXSpeedBy(x*10);
-	m_nut->changeYSpeedBy(y*10);
+	m_nut->changeXSpeedBy(x*50);
+	m_nut->changeYSpeedBy(y*50);
 
 	m_zombiemanager->didAccelerate(pAccelerationValue, m_label);
 }
 
 void SpaceAdventureScene::onExit()
 {
-
 }
 
 void SpaceAdventureScene::createNut()
@@ -108,6 +109,7 @@ void SpaceAdventureScene::createZombies()
 
 void SpaceAdventureScene::createShield()
 {
-	m_shield = Shield::create();
+	m_shield = Shield::getShieldSingleton();
+
 	addChild(m_shield, 50);
 }

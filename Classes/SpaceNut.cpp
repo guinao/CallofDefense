@@ -1,10 +1,14 @@
 #include "SpaceNut.h"
+#include <cmath>
+
+const double pi = cos(-1.0);
 
 SpaceNut::SpaceNut()
 {
 	m_xspeed = 50.0;
 	m_yspeed = -50.0;
 	m_state = en_Floating;
+	m_rotateangle = 0.0;
 }
 
 SpaceNut::~SpaceNut()
@@ -62,7 +66,7 @@ void SpaceNut::changeXSpeedBy(float delta)
 		m_xspeed += delta;
 		break;
 	case en_InShield:
-		m_xspeed = delta;
+		m_xspeed = delta*10;
 		break;
 	default:
 		m_xspeed += delta;
@@ -78,7 +82,7 @@ void SpaceNut::changeYSpeedBy(float delta)
 		m_yspeed += delta;
 		break;
 	case en_InShield:
-		m_yspeed = delta;
+		m_yspeed = delta*10;
 		break;
 	default:
 		m_yspeed += delta;
@@ -122,11 +126,18 @@ void SpaceNut::moveInShield(float delta)
 {
 	CCPoint current = m_sprite->getPosition();
 
+	float dx = delta*m_xspeed;
+	float dy = delta*m_yspeed;
 	m_sprite->setPositionX(current.x + delta*m_xspeed);
 	m_sprite->setPositionY(current.y + delta*m_yspeed);
 
-	m_xspeed = 0.0f;
-	m_yspeed = 0.0f;
+	CCSize spritesize = m_sprite->getContentSize();
+	float r2 = spritesize.height*spritesize.height + spritesize.width*spritesize.width;
+	float angle = sqrt((dx*dx+dy*dy)/r2)/pi*180.0;
+	
+	m_rotateangle += dx>0 ? angle : -angle;
+
+	m_sprite->setRotation(m_rotateangle);
 
 	// detect if the nut collide with the visible region
 	CCSize size = CCDirector::sharedDirector()->getVisibleSize();
@@ -145,6 +156,10 @@ void SpaceNut::moveInShield(float delta)
 	{
 		m_sprite->setPosition(current);
 	}
+
+
+	m_xspeed = 0.0f;
+	m_yspeed = 0.0f;
 }
 
 void SpaceNut::moveInSpace(float delta)

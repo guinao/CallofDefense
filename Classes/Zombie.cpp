@@ -184,7 +184,7 @@ void Zombie::onHurt(int hurt, float xspeed, float yspeed)
 	m_hp -= hurt;
 	if(m_hp < 0)
 	{
-		stopAllActions();
+		m_sprite->stopAllActions();
 		CCRotateBy *action1 = CCRotateBy::create(0.2, 180.0, 180.0);
 		m_sprite->runAction(CCRepeatForever::create(action1));
 		m_xspeed = xspeed;

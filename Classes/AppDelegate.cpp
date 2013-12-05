@@ -12,6 +12,7 @@
 //#include "MMWidget\MMWinManager.h"
 #include "DemoScene.h"
 #include "SpaceAdventureScene.h"
+#include "BootScene.h"
 
 using namespace CocosDenshion;
 
@@ -41,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCDirector *pDirector = CCDirector::sharedDirector();
 	pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
-	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(800, 600, kResolutionShowAll);
+	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(1024, 512, kResolutionShowAll);
 
 	pDirector->setDisplayStats(true);
 
@@ -50,7 +51,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//pDirector->runWithScene(DemoScene::scene());
 	//SimpleAudioEngine::sharedEngine()->vibrate(1000);
 
-	pDirector->runWithScene(SpaceAdventureScene::scene());
+	//pDirector->runWithScene(SpaceAdventureScene::scene());
+	pDirector->runWithScene(BootScene::scene());
 	/* 调用场景管理器切换场景 */
     //SceneManager::sharedSceneManager()->changeScene(SceneManager::en_DemoScene);
     return true;

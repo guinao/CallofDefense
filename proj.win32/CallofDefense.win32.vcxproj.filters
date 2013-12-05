@@ -70,6 +70,12 @@
     <ClCompile Include="..\Classes\Shield.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\SpaceZombie.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Classes\BootScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -115,6 +121,12 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GlobalDefs.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\SpaceZombie.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\BootScene.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

@@ -39,6 +39,7 @@ private:
 	int m_gravity;
 	StateInSpace m_state;
 	float m_shieldpos[3];
+	float m_rotateangle;
 };
 
 #endif
