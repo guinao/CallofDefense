@@ -66,7 +66,7 @@ Plant* Plant::createPlant(PlantType type, CCPoint pos)
 		CCSprite* sprite = CCSprite::createWithSpriteFrameName(picture);
 		sprite->setPosition(pos);
 
-		p->addChild(sprite);
+		p->setSprite(sprite);
 
 		CCArray* animFrames = CCArray::createWithCapacity(numFrames);
 		for(int i=1; i<=numFrames/*magic number*/; ++i)
@@ -78,6 +78,7 @@ Plant* Plant::createPlant(PlantType type, CCPoint pos)
 		CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames, 0.1f);
 		animation->setLoops(-1);
 
+		
 		sprite->runAction(CCAnimate::create(animation));
 
 		p->setScale(1.5);
@@ -167,4 +168,25 @@ void Plant::onHurt(int hp)
 {
 	CCLOG("Plant::onHurt");
 	m_hp -= hp;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void Plant::setSprite(CCSprite* sprite)
+{
+	m_sprite = sprite;
+	addChild(m_sprite);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+CCRect Plant::myBoundingBox()
+{
+	CCSize size = m_sprite->getContentSize();
+
+	return CCRectMake(
+		getPositionX()-size.width/2,
+		getPositionY()-size.height/2,
+		size.width,
+		size.height);
 }

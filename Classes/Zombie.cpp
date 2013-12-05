@@ -22,8 +22,10 @@ Zombie* Zombie::createZombie(ZombieType type, CCPoint pos)
 	Zombie *p = new Zombie();
 	p->m_type = type;
 	p->m_state = en_ZombieMoving;
-	
+
 	bool bRet = false;
+
+	p->m_yspeed = 0.0f;
 
 	do{
 		char name[64], picture[64];
@@ -32,31 +34,31 @@ Zombie* Zombie::createZombie(ZombieType type, CCPoint pos)
 		{
 		case en_BucketheadZombie:
 			numFrames = 15;
-			p->m_speed = 10.0f;
+			p->m_xspeed = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "BucketheadZombie");
 			break;
 		case en_ConeheadZombie:
 			numFrames = 21;
-			p->m_speed = 10.0f;
+			p->m_xspeed = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "ConeheadZombie");
 			break;
 		case en_FlagZombie:
 			numFrames = 12;
-			p->m_speed = 10.0f;
+			p->m_xspeed = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "FlagZombie");
 			break;
 		case en_NormalZombie:
 			numFrames = 22;
-			p->m_speed = 10.0f;
+			p->m_xspeed = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "zombie");
 			break;
 		default:
 			numFrames = 22;
-			p->m_speed = 10.0f;
+			p->m_xspeed = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "zombie");
 			break;
@@ -64,12 +66,8 @@ Zombie* Zombie::createZombie(ZombieType type, CCPoint pos)
 
 		sprintf(picture, "%s%03d.png", name, 1);
 
-		CCSprite* sprite = CCSprite::createWithSpriteFrameName(picture);
-		sprite->setPosition(pos);
-
-		p->addChild(sprite);
-		p->setSprite(sprite);
-
+		p->m_sprite = CCSprite::createWithSpriteFrameName(picture);
+		(p->m_sprite)->setPosition(pos);
 
 		CCArray* animFrames = CCArray::createWithCapacity(numFrames);
 		for(int i=1; i<=numFrames/*magic number*/; ++i)
@@ -80,9 +78,12 @@ Zombie* Zombie::createZombie(ZombieType type, CCPoint pos)
 		}
 		CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames, 0.1f);
 		CCAnimate* animate = CCAnimate::create(animation);
-		sprite->runAction(CCRepeatForever::create(animate));
+		p->m_animationAtEase = CCRepeatForever::create(animate);
+		(p->m_sprite)->runAction(p->m_animationAtEase);
 
-		sprite->setScale(1.5f);
+		(p->m_sprite)->setScale(1.5f);
+
+		p->addChild(p->m_sprite, 10);
 
 		bRet = true;
 	}while(0);
@@ -102,7 +103,6 @@ Zombie* Zombie::createZombie(ZombieType type, CCPoint pos)
 
 void Zombie::createAnimations()
 {
-	// TODO: create animation for all kinds of actions
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -110,9 +110,9 @@ void Zombie::createAnimations()
 void Zombie::update(float delta)
 {
 	CCLOG("Zombie::update");
-	if(m_hp > 0)
+//	if(m_hp > 0)
 	{
-		if(! findSomethingToEat())
+//		if(! findSomethingToEat())
 		{
 			moving(delta);
 		}
@@ -131,19 +131,34 @@ void Zombie::attack()
 void Zombie::moving(float delta)
 {
 	CCLOG("Zombie::moving");
-	CCPoint currentPos = getPosition();
-	setPosition(ccp(currentPos.x - delta*m_speed, currentPos.y));
+	char msg[128];
+
+	CCPoint currentPos = m_sprite->getPosition();
+	m_sprite->setPosition(ccp(currentPos.x - delta*m_xspeed, currentPos.y + delta*m_yspeed));
+
+	sprintf(msg, "%f, %f, %f, %f", 
+		myBoundingBox().getMinX(),
+		myBoundingBox().getMinY(),
+		myBoundingBox().getMaxX(),
+		myBoundingBox().getMaxY());
+	CCLOG(msg);
+
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 bool Zombie::findSomethingToEat()
 {
-	bool bRet = false;
+	CCLOG("Zombie::findSomethingToEat");
 
+	bool bRet = false;
 	ZombieManager* p = dynamic_cast<ZombieManager*>(getParent());
 	DemoScene* ds = dynamic_cast<DemoScene*>(p->getParent());
-	Plant* plant = ds->findPlantInRange(m_sprite->boundingBox());
+	Plant* plant = ds->findPlantInRange(myBoundingBox());
+	char msg[128];
+	CCRect rect = myBoundingBox();
+	sprintf(msg, "%f, %f, %f, %f", rect.getMinX(), rect.getMinY(), rect.getMaxX(), rect.getMaxY());
+	CCLOG(msg);
 
 	if(NULL != plant)
 	{
@@ -157,8 +172,22 @@ bool Zombie::findSomethingToEat()
 
 //////////////////////////////////////////////////////////////////////////
 
-void Zombie::setSprite(CCSprite* sprite)
+CCRect Zombie::myBoundingBox()
+{	
+	return m_sprite->boundingBox();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void Zombie::onHurt(int hurt, float xspeed, float yspeed)
 {
-	m_sprite = sprite;
-	m_sprite->retain();
+	m_hp -= hurt;
+	if(m_hp < 0)
+	{
+		stopAllActions();
+		CCRotateBy *action1 = CCRotateBy::create(0.2, 180.0, 180.0);
+		m_sprite->runAction(CCRepeatForever::create(action1));
+		m_xspeed = xspeed;
+		m_yspeed = yspeed;
+	}
 }

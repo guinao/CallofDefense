@@ -3,10 +3,12 @@
 
 #include "cocos2d.h"
 #include "cocos-ext.h"
-#include "Character.h"
 #include "EnumPlantType.h"
 #include "Zombie.h"
+#include "SpaceNut.h"
+#include "Plant.h"
 #include <vector>
+
 using namespace std;
 
 class DemoScene;
@@ -19,24 +21,26 @@ public:
 	ZombieManager();
 	~ZombieManager();
 
-	CREATE_FUNC(ZombieManager);
+	CREATE_FUNC(ZombieManager);			// create a random infinite zombie generator
+
 	virtual bool init();
 	virtual void update(float delta);
 	void enableMove(float delta);
 	void disableMove();
-	void didAccelerate(CCAcceleration* pAccelerationValue, CCLabelAtlas* m_label);
+	void didAccelerate(CCAcceleration* pAccelerationValue, CCLabelAtlas* label);
 
 	void createZombies(const vector<ZombieType> &v, const vector<CCPoint> &vp);
 
-	void getZombiesPosition(vector<CCPoint>& vc);
+	void getZombiesPosition(vector<CCRect>& vc);
+	bool hitDetect(CCRect rect);
 
 private:
-	void moveZombies(float delta);
 	void moveZombie(Zombie* zombie, float delta);
 
-	CCArray* m_Zombies;
+	vector<Zombie*> m_Zombies;
 	bool m_bMove;
 	double m_dShakePower;
+	int m_probabiliy;
 };
 
 #endif

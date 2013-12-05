@@ -22,8 +22,10 @@ public:
 	void update(float delta);
 	void onHurt(int hp);
 	bool isAlive(){ return m_hp > 0; };
+	CCRect myBoundingBox();
 
 private:
+	void setSprite(CCSprite* sprite);
 	void createAnimations();
 	void attack(CCPoint& direction);
 	bool findAim(CCPoint& direction);

@@ -22,23 +22,26 @@ public:
 	static Zombie* createZombie(ZombieType type, CCPoint pos);
 
 	void update(float delta);
+	CCRect myBoundingBox();
+	void onHurt(int hurt, float xspeed, float yspeed);
 
 private:
 	void createAnimations();
 	void attack();
 	void moving(float delta);
 	bool findSomethingToEat();
-	void setSprite(CCSprite* sprite);
 
-	CCAnimation *m_animationAtEase;
-	CCAnimation *m_animationAttack;
-	CCAnimation *m_animationDead;
+	CCAction *m_animationAtEase;
+	CCAction *m_animationAttack;
+	CCAction *m_animationDead;
+	CCAction *m_animationFlyAway;
 
 	CCSprite* m_sprite;
 	ZombieType m_type;
 	ZombieState m_state;
 	int m_hp;
-	double m_speed;
+	float m_xspeed;
+	float m_yspeed;
 	double m_distance;		// distance to next path point
 	vector<CCPoint> m_path;
 };

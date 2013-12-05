@@ -135,6 +135,9 @@
     <ClCompile Include="..\Classes\DemoScene.cpp" />
     <ClCompile Include="..\Classes\Plant.cpp" />
     <ClCompile Include="..\Classes\PlantManager.cpp" />
+    <ClCompile Include="..\Classes\Shield.cpp" />
+    <ClCompile Include="..\Classes\SpaceAdventureScene.cpp" />
+    <ClCompile Include="..\Classes\SpaceNut.cpp" />
     <ClCompile Include="..\Classes\SunShine.cpp" />
     <ClCompile Include="..\Classes\TouchLayer.cpp" />
     <ClCompile Include="..\Classes\Zombie.cpp" />
@@ -145,8 +148,12 @@
     <ClInclude Include="..\Classes\AppDelegate.h" />
     <ClInclude Include="..\Classes\DemoScene.h" />
     <ClInclude Include="..\Classes\EnumPlantType.h" />
+    <ClInclude Include="..\Classes\GlobalDefs.h" />
     <ClInclude Include="..\Classes\Plant.h" />
     <ClInclude Include="..\Classes\PlantManager.h" />
+    <ClInclude Include="..\Classes\Shield.h" />
+    <ClInclude Include="..\Classes\SpaceAdventureScene.h" />
+    <ClInclude Include="..\Classes\SpaceNut.h" />
     <ClInclude Include="..\Classes\SunShine.h" />
     <ClInclude Include="..\Classes\TouchLayer.h" />
     <ClInclude Include="..\Classes\Zombie.h" />

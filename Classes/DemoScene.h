@@ -5,7 +5,6 @@
 #include "cocos-ext.h"
 #include "PlantManager.h"
 #include "ZombieManager.h"
-#include "DemoScene.h"
 #include "EnumPlantType.h"
 #include "TouchLayer.h"
 #include "SunShine.h"
@@ -20,6 +19,7 @@ public:
 	static CCScene* scene();
 	CREATE_FUNC(DemoScene);
 	virtual bool init();
+	virtual void onExit();
 	virtual void didAccelerate(CCAcceleration* pAccelerationValue);
 	virtual void update(float delta);
 	Plant* findPlantInRange(CCRect rect);
@@ -38,6 +38,7 @@ private:
 	void labForSunShine();
 	bool labForZombieManager();
 	void labForTouchLayer();
+	void labForTexture();
 	void getPlantsPosition();
 	void getZombiesPosition();
 
@@ -53,7 +54,7 @@ private:
 	PlantManager* m_plantmanager;
 	ZombieManager* m_zombiemanager;
 	vector<CCPoint> m_plantsposition;
-	vector<CCPoint> m_zombiesposition;
+	vector<CCRect> m_zombiesposition;
 };
 
 #endif

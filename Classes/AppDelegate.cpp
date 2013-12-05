@@ -11,6 +11,7 @@
 //#include "GlobalClient.h"
 //#include "MMWidget\MMWinManager.h"
 #include "DemoScene.h"
+#include "SpaceAdventureScene.h"
 
 using namespace CocosDenshion;
 
@@ -33,12 +34,6 @@ AppDelegate::~AppDelegate() {
 	//CC_SAFE_RELEASE(GlobalClient::sharedGlobalClient());
 	//CC_SAFE_RELEASE(MMWinManager::sharedWinManager());
 
-	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/zombies_type.plist");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/peashooter.plist");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/plants_type.plist");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/plant_sun.plist");
-	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/cardMenu.plist");
-
     SimpleAudioEngine::end();
 }
 
@@ -52,7 +47,10 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
 	pDirector->setAnimationInterval(1.0 / 60);
 
-	pDirector->runWithScene(DemoScene::scene());
+	//pDirector->runWithScene(DemoScene::scene());
+	//SimpleAudioEngine::sharedEngine()->vibrate(1000);
+
+	pDirector->runWithScene(SpaceAdventureScene::scene());
 	/* 调用场景管理器切换场景 */
     //SceneManager::sharedSceneManager()->changeScene(SceneManager::en_DemoScene);
     return true;

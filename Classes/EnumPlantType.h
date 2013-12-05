@@ -42,4 +42,10 @@ enum GameState
 	en_GameTied
 };
 
+enum StateInSpace
+{
+	en_Floating,
+	en_InShield
+};
+
 #endif

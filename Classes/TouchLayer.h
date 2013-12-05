@@ -19,8 +19,8 @@ USING_NS_CC;
 class TouchLayer : public CCLayer {
 public:
 	static CCScene* scene();
-	CREATE_FUNC(TouchLayer);
 	virtual bool init();
+	CREATE_FUNC(TouchLayer);
 	virtual void update(float delta);
 	virtual bool ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent);
 	virtual void ccTouchMoved(CCTouch *pTouches, CCEvent *pEvent);

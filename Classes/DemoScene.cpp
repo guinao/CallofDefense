@@ -1,7 +1,4 @@
 #include "DemoScene.h"
-#include "GlobalPath.h"
-#include "GlobalParam.h"
-#include "SceneManager.h"
 #include <vector>
 using namespace std;
 
@@ -65,6 +62,7 @@ bool DemoScene::init()
 
 		CC_BREAK_IF(! labForZombieManager());
 
+		labForTexture();
 		//labForSunShine();
 
 		//labForCCSprites();
@@ -327,7 +325,8 @@ Plant* DemoScene::findPlantInRange(CCRect rect)
 	CCARRAY_FOREACH(m_plantmanager->m_plants, Obj)
 	{
 		Plant *plant = dynamic_cast<Plant*>(Obj);
-		if(plant->boundingBox().intersectsRect(rect) && plant->isAlive())
+		CCRect aa = plant->myBoundingBox();
+		if(aa.intersectsRect(rect) && plant->isAlive())
 		{
 			p = plant;
 			break;
@@ -335,4 +334,23 @@ Plant* DemoScene::findPlantInRange(CCRect rect)
 	}
 
 	return p;
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void DemoScene::onExit()
+{
+	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/zombies_type.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/peashooter.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/plants_type.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/plant_sun.plist");
+	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/cardMenu.plist");
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void DemoScene::labForTexture()
+{
+	CCSprite* crazydave = CCSprite::create("PvZelements/Tallnut_body.png");
+	addChild(crazydave, 20);
 }
