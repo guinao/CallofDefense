@@ -111,8 +111,6 @@ bool SpaceZombie::init(ZombieType type, CCPoint pos)
 			action2, action3, action3, action2, NULL);
 		m_animationFloating = CCRepeatForever::create(action4);
 
-		//////////////////////////////////////////////////////////////////////////
-
 		bRet = true;
 	}while(0);
 
@@ -129,6 +127,10 @@ void SpaceZombie::update(float delta)
 	case en_ZombieAttacking:
 		break;
 	case en_ZombieDead:
+		if()
+		{
+
+		}
 		break;
 	case en_ZombieStopped:
 		break;
@@ -191,8 +193,18 @@ void SpaceZombie::performMove(float delta)
 	}
 }
 
-void SpaceZombie(float x, float y)
+void SpaceZombie::hitAway(float x, float y)
 {
-	CCRotateBy *action1 = CCRotateBy::create(0.2, 180.0, 180.0);
-//	CCMoveBy *action2 = CCMoveBy::create(5.0, )
+	m_state1 = en_ZombieDead;
+	m_hp = -1;
+	CCRotateBy *rotate1 = CCRotateBy::create(1.0f, 20.0f, 20.0f);
+	CCActionInterval *rotate2 = rotate1->reverse();
+	CCSequence *action = CCSequence::create(
+		rotate1,
+		rotate2,
+		rotate2,
+		rotate1,
+		NULL);
+	m_sprite->runAction(CCRepeatForever::create(action));
+	m_direction = ccp(x, y);
 }

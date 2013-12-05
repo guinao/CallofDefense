@@ -42,7 +42,7 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCDirector *pDirector = CCDirector::sharedDirector();
 	pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
-	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(1024, 512, kResolutionShowAll);
+	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(800, 600, kResolutionShowAll);
 
 	pDirector->setDisplayStats(true);
 

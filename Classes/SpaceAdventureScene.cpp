@@ -111,5 +111,5 @@ void SpaceAdventureScene::createShield()
 {
 	m_shield = Shield::getShieldSingleton();
 
-	addChild(m_shield, 50);
+	addChild(m_shield);
 }

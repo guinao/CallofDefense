@@ -24,12 +24,14 @@ public:
 	void genBackground();
 	void onEnter();
 	virtual void ccTouchesBegan(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
+	virtual void ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent);
 	cocos2d::CCSprite* spriteWithColor(cocos2d::ccColor4F bgColor, float textureWidth, float textureHeight);
 	cocos2d::ccColor4F randomBrightColor();
 	cocos2d::CCSprite * spriteWithColor1(cocos2d::ccColor4F c1, cocos2d::ccColor4F c2, float textureWidth, float textureHeight, int nStripes);
 	void update(float dt);
 	void eggAppear();
 	cocos2d::CCSprite *_background;
+	cocos2d::CCSprite *_starticon;
 };
 
 #endif  // __HELLOWORLD_SCENE_H__

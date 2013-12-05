@@ -6,6 +6,8 @@
 #include "misc_nodes\CCRenderTexture.h"
 #include "actions\CCActionInterval.h"
 #include "actions\CCAction.h"
+#include "SpaceAdventureScene.h"
+
 using namespace cocos2d;
 
 BootScene::BootScene()
@@ -100,6 +102,25 @@ void BootScene::ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent)
 	this->genBackground();
 }
 
+void BootScene::ccTouchesEnded(cocos2d::CCSet *pTouches, cocos2d::CCEvent *pEvent)
+{
+	if(1 == pTouches->count())
+	{
+		CCTouch *touch = dynamic_cast<CCTouch*>(pTouches->anyObject());
+		CCPoint pos1 = touch->getLocationInView();
+		CCPoint	pos2 = CCDirector::sharedDirector()->convertToUI(pos1);
+
+		if( _starticon->boundingBox().containsPoint(pos2) )
+		{
+			CCDirector::sharedDirector()->replaceScene(
+				cocos2d::CCTransitionShrinkGrow::create(
+					0.5, SpaceAdventureScene::scene()
+				)
+			);
+		}
+	}
+}
+
 CCSprite* BootScene::spriteWithColor(ccColor4F bgColor, float textureWidth, float textureHeight)
 {
 	// 1: Create new CCRenderTexture
@@ -148,8 +169,6 @@ CCSprite* BootScene::spriteWithColor(ccColor4F bgColor, float textureWidth, floa
 	// 5: Create a new Sprite from the texture
 	return CCSprite::createWithTexture(rt->getSprite()->getTexture());
 }
-
-
 
 CCSprite * BootScene::spriteWithColor1(ccColor4F c1, ccColor4F c2, float textureWidth, float textureHeight, int nStripes)
 {
@@ -418,10 +437,10 @@ bool BootScene::init()
 		Y->runAction(CCRepeatForever::create(YAct));
 
 	// Icon
-		CCSprite* icon = CCSprite::create("voyage.png");
-		icon->setScale(0.2);
-		icon->setPosition(ccp(winSize.width / 2, winSize.height * 1 / 4));
-		this->addChild(icon, 10);
+		_starticon = CCSprite::create("voyage.png");
+		_starticon->setScale(0.2);
+		_starticon->setPosition(ccp(winSize.width / 2, winSize.height * 1 / 4));
+		this->addChild(_starticon, 10);
 		CCActionInterval *iconAction1 = CCFadeTo::create(1, 150);
 		CCActionInterval *iconAction2 = CCFadeTo::create(1, 200);
 		CCFiniteTimeAction *iconAction3 = CCRotateBy::create(2, 360);
@@ -434,7 +453,7 @@ bool BootScene::init()
 		//CCActionInterval *iconAct2 = CCSequence::create(iconAction3, iconAction4, NULL);
 		// CCActionInterval *iconAct3 = CCSequence::create(iconAction6, iconAction7, NULL);
 		CCActionInterval *iconAct =  CCSpawn::create(iconAction1, iconAction3, NULL);
-		icon->runAction(CCRepeatForever::create(iconAct));
+		_starticon->runAction(CCRepeatForever::create(iconAct));
     } while (0);
 
     return bRet;
