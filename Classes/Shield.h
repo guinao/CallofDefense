@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "GlobalDefs.h"
+#include "EnumPlantType.h"
 #include <vector>
 #include <utility>
 
@@ -18,10 +19,11 @@ public:
 	static Shield* getShieldSingleton();
 
 	virtual bool init();
-
+	virtual void onExit();
 	virtual void update(float delta);
 	virtual void draw();
 
+	void onHurt(float losehp);
 	void collideDetect();
 
 	virtual void ccTouchesBegan(CCSet *pTouches, CCEvent *pEvent);
@@ -29,6 +31,7 @@ public:
 	virtual void ccTouchesEnded(CCSet *pTouches, CCEvent *pEvent);
 	
 	void getCenterAndRadius(float &r, float &x, float &y);
+
 private:
 	CREATE_FUNC(Shield);
 	void drawShieldRegion();
@@ -39,6 +42,9 @@ private:
 	CCPoint m_oldtouchpoint;
 	float m_radius;
 	bool m_touched;
+	float m_hp;
+	CCTexture2D *texture[3];
+	ShieldState m_state;
 
 	static Shield *m_shield;
 };

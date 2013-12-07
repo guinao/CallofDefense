@@ -25,7 +25,7 @@ Zombie* Zombie::createZombie(ZombieType type, CCPoint pos)
 
 	bool bRet = false;
 
-	p->m_yspeed = 0.0f;
+	p->m_speedy = 0.0f;
 
 	do{
 		char name[64], picture[64];
@@ -34,31 +34,31 @@ Zombie* Zombie::createZombie(ZombieType type, CCPoint pos)
 		{
 		case en_BucketheadZombie:
 			numFrames = 15;
-			p->m_xspeed = 10.0f;
+			p->m_speedx = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "BucketheadZombie");
 			break;
 		case en_ConeheadZombie:
 			numFrames = 21;
-			p->m_xspeed = 10.0f;
+			p->m_speedx = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "ConeheadZombie");
 			break;
 		case en_FlagZombie:
 			numFrames = 12;
-			p->m_xspeed = 10.0f;
+			p->m_speedx = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "FlagZombie");
 			break;
 		case en_NormalZombie:
 			numFrames = 22;
-			p->m_xspeed = 10.0f;
+			p->m_speedx = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "zombie");
 			break;
 		default:
 			numFrames = 22;
-			p->m_xspeed = 10.0f;
+			p->m_speedx = 10.0f;
 			p->m_hp = 100;
 			strcpy(name, "zombie");
 			break;
@@ -134,7 +134,7 @@ void Zombie::moving(float delta)
 	char msg[128];
 
 	CCPoint currentPos = m_sprite->getPosition();
-	m_sprite->setPosition(ccp(currentPos.x - delta*m_xspeed, currentPos.y + delta*m_yspeed));
+	m_sprite->setPosition(ccp(currentPos.x - delta*m_speedx, currentPos.y + delta*m_speedy));
 
 	sprintf(msg, "%f, %f, %f, %f", 
 		myBoundingBox().getMinX(),
@@ -187,7 +187,7 @@ void Zombie::onHurt(int hurt, float xspeed, float yspeed)
 		m_sprite->stopAllActions();
 		CCRotateBy *action1 = CCRotateBy::create(0.2, 180.0, 180.0);
 		m_sprite->runAction(CCRepeatForever::create(action1));
-		m_xspeed = xspeed;
-		m_yspeed = yspeed;
+		m_speedx = xspeed;
+		m_speedy = yspeed;
 	}
 }

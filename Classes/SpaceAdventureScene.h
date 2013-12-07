@@ -7,6 +7,8 @@
 #include "SpaceNut.h"
 #include "ZombieManager.h"
 #include "Shield.h"
+#include "SpaceZombie.h"
+#include <vector>
 
 USING_NS_CC;
 
@@ -27,15 +29,21 @@ private:
 	void createNut();
 	void createZombies();
 	void createShield();
+	SpaceZombie* generateZombie();
+	void processCollide(SpaceNut* nut, SpaceZombie* zombie);
+	void loseGame(CCObject*);
+	void winGame(CCObject*);
 
 	ZombieManager *m_zombiemanager;
 	SpaceNut *m_nut;
 
 	double m_maxshakevalue;
 	double m_shakevaluebound;
+	int m_generateSeed;
 
 	CCLabelAtlas* m_label;
 
+	vector<SpaceZombie*> m_zombies;
 	Shield* m_shield;
 };
 

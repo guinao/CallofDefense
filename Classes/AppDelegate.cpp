@@ -18,22 +18,17 @@ using namespace CocosDenshion;
 
 USING_NS_CC;
 
-AppDelegate::AppDelegate() {
-	//CC_SAFE_RETAIN(PosLoadUtil::sharedPosLoadUtil());
-	//CC_SAFE_RETAIN(SceneManager::sharedSceneManager());
-	//CC_SAFE_RETAIN(CsvUtil::sharedCsvUtil());
-	//CC_SAFE_RETAIN(I18N::shareI18N());
-	//CC_SAFE_RETAIN(GlobalClient::sharedGlobalClient());
-	//CC_SAFE_RETAIN(MMWinManager::sharedWinManager());
+AppDelegate::AppDelegate() 
+{
 }
 
-AppDelegate::~AppDelegate() {
-	//CC_SAFE_RELEASE(PosLoadUtil::sharedPosLoadUtil());
-	//CC_SAFE_RELEASE(SceneManager::sharedSceneManager());
-	//CC_SAFE_RELEASE(CsvUtil::sharedCsvUtil());
-	//CC_SAFE_RELEASE(I18N::shareI18N());
-	//CC_SAFE_RELEASE(GlobalClient::sharedGlobalClient());
-	//CC_SAFE_RELEASE(MMWinManager::sharedWinManager());
+AppDelegate::~AppDelegate() 
+{
+//		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/peashooter.plist");
+		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/plants_type.plist");
+		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/zombies_type.plist");
+		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/plant_sun.plist");
+		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/cardMenu.plist");
 
     SimpleAudioEngine::end();
 }
@@ -51,8 +46,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//pDirector->runWithScene(DemoScene::scene());
 	//SimpleAudioEngine::sharedEngine()->vibrate(1000);
 
-	//pDirector->runWithScene(SpaceAdventureScene::scene());
-	pDirector->runWithScene(BootScene::scene());
+	pDirector->runWithScene(SpaceAdventureScene::scene());
+	//pDirector->runWithScene(BootScene::scene());
 	/* 调用场景管理器切换场景 */
     //SceneManager::sharedSceneManager()->changeScene(SceneManager::en_DemoScene);
     return true;

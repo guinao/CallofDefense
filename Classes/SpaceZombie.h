@@ -19,23 +19,30 @@ class SpaceZombie : public CCNode
 public:
 
 	static SpaceZombie* createSpaceZombie(ZombieType type, CCPoint pos);
-	bool init(ZombieType type, CCPoint pos);
+	virtual bool init(ZombieType type, CCPoint pos);
+	virtual void update(float delta);
 
-	void update(float delta);
-	void hitAway(float x, float y);
-
+	void hit(float v1x, float v1y, float m1);
+	ZombieState getZombieState(){	return m_state1;	};
+	CCRect myBoundingBox(){	return m_sprite->boundingBox();	};
+	int getHp(){	return m_hp;	};
+	float getSpeedX(){	return m_speed * m_direction.x;	};
+	float getSpeedY(){	return m_speed * m_direction.y;	};
+	float getWeight(){	return m_weight;	};
 //	CCRect myBoundingBox();
 //	void onHurt(int hurt, float xspeed, float yspeed);
 
 private:
 	//	void attack();
 	void performMove(float delta);
-//	bool findSomethingToEat();
+	void performFlyAway(float delta);
+	void performAttacking(float delta);
 
-	CCAction *m_animationFloating;
-	CCAction *m_animationWalking;
-	CCAction *m_animationAttack;
-	CCAction *m_animationDead;
+	CCAction* createWalkingAction();
+	CCAction* createFloatingAction();
+	CCAction* createFlyAwayAction();
+
+	void updateState2();
 
 	CCSprite* m_sprite;
 	ZombieType m_type;
@@ -47,8 +54,9 @@ private:
 	int m_aicount;
 	float m_speed;
 	CCPoint m_direction;
-//	float m_xspeedfloating; set as 2x of the walking speed;
-//	float m_yspeedfloating;
+	int m_weight;
+//	float m_speedxfloating; set as 2x of the walking speed;
+//	float m_speedyfloating;
 };
 
 #endif

@@ -40,8 +40,8 @@ private:
 	ZombieType m_type;
 	ZombieState m_state;
 	int m_hp;
-	float m_xspeed;
-	float m_yspeed;
+	float m_speedx;
+	float m_speedy;
 	double m_distance;		// distance to next path point
 	vector<CCPoint> m_path;
 };

@@ -32,7 +32,8 @@ enum ZombieState
 	en_ZombieMoving = 1,
 	en_ZombieStopped,
 	en_ZombieAttacking,
-	en_ZombieDead
+	en_ZombieDead,
+	en_ZombieFlyAway
 };
 
 enum GameState
@@ -46,6 +47,13 @@ enum StateInSpace
 {
 	en_Floating = 1,
 	en_InShield
+};
+
+enum ShieldState
+{
+	en_hpHigh = 1,
+	en_hpMid,
+	en_hpLow
 };
 
 #endif

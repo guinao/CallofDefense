@@ -1,4 +1,5 @@
 #include "DemoScene.h"
+#include "SpaceZombie.h"
 #include <vector>
 using namespace std;
 

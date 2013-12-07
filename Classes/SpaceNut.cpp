@@ -5,10 +5,11 @@ const double pi = cos(-1.0);
 
 SpaceNut::SpaceNut()
 {
-	m_xspeed = 50.0;
-	m_yspeed = -50.0;
+	m_speedx = 50.0;
+	m_speedy = -50.0;
 	m_state = en_Floating;
 	m_rotateangle = 0.0;
+	m_weight = weightNut;
 }
 
 SpaceNut::~SpaceNut()
@@ -58,41 +59,46 @@ bool SpaceNut::init()
 	return bRet;
 }
 
-void SpaceNut::changeXSpeedBy(float delta)
+void SpaceNut::onExit()
+{
+	unscheduleUpdate();
+}
+
+void SpaceNut::changeSpeedXBy(float delta)
 {
 	switch(m_state)
 	{
 	case en_Floating:
-		m_xspeed += delta;
+		m_speedx += delta;
 		break;
 	case en_InShield:
-		m_xspeed = delta*10;
+		m_speedx = delta*10;
 		break;
 	default:
-		m_xspeed += delta;
+		m_speedx += delta;
 		break;
 	}
 }
 
-void SpaceNut::changeYSpeedBy(float delta)
+void SpaceNut::changeSpeedYBy(float delta)
 {
 	switch(m_state)
 	{
 	case en_Floating:
-		m_yspeed += delta;
+		m_speedy += delta;
 		break;
 	case en_InShield:
-		m_yspeed = delta*10;
+		m_speedy = delta*10;
 		break;
 	default:
-		m_yspeed += delta;
+		m_speedy += delta;
 		break;
 	}
 }
 
 void SpaceNut::update(float delta)
 {
-	CCLOG("SpaceNut::update(float delta)");
+//	CCLOG("SpaceNut::update(float delta)");
 	
 	float dx = m_shieldpos[1] - m_sprite->getPositionX();
 	float dy = m_shieldpos[2] - m_sprite->getPositionY();
@@ -126,10 +132,10 @@ void SpaceNut::moveInShield(float delta)
 {
 	CCPoint current = m_sprite->getPosition();
 
-	float dx = delta*m_xspeed;
-	float dy = delta*m_yspeed;
-	m_sprite->setPositionX(current.x + delta*m_xspeed);
-	m_sprite->setPositionY(current.y + delta*m_yspeed);
+	float dx = delta*m_speedx;
+	float dy = delta*m_speedy;
+	m_sprite->setPositionX(current.x + delta*m_speedx);
+	m_sprite->setPositionY(current.y + delta*m_speedy);
 
 	CCSize spritesize = m_sprite->getContentSize();
 	float r2 = spritesize.height*spritesize.height + spritesize.width*spritesize.width;
@@ -158,16 +164,16 @@ void SpaceNut::moveInShield(float delta)
 	}
 
 
-	m_xspeed = 0.0f;
-	m_yspeed = 0.0f;
+	m_speedx = 0.0f;
+	m_speedy = 0.0f;
 }
 
 void SpaceNut::moveInSpace(float delta)
 {
 	CCPoint current = m_sprite->getPosition();
 
-	m_sprite->setPositionX(current.x + delta*m_xspeed);
-	m_sprite->setPositionY(current.y + delta*m_yspeed);
+	m_sprite->setPositionX(current.x + delta*m_speedx);
+	m_sprite->setPositionY(current.y + delta*m_speedy);
 
 	// detect if the nut collide with the visible region
 	CCSize size = CCDirector::sharedDirector()->getVisibleSize();
@@ -179,13 +185,13 @@ void SpaceNut::moveInSpace(float delta)
 
 	if(maxX>size.width || minX<0)
 	{
-		m_xspeed = -m_xspeed;
+		m_speedx = -m_speedx;
 		m_sprite->setPosition(current);
 	}
 
 	if(maxY>size.height || minY<0)
 	{
-		m_yspeed = -m_yspeed;
+		m_speedy = -m_speedy;
 		m_sprite->setPosition(current);
 	}
 }
@@ -203,4 +209,13 @@ void SpaceNut::recvShieldPosition(CCObject *pData)
 	m_shieldpos[0] = dynamic_cast<CCFloat*>(dict->objectForKey(0))->getValue();
 	m_shieldpos[1] = dynamic_cast<CCFloat*>(dict->objectForKey(1))->getValue();
 	m_shieldpos[2] = dynamic_cast<CCFloat*>(dict->objectForKey(2))->getValue();
+}
+
+void SpaceNut::hit(float v1x, float v1y, float m1)
+{
+	float v2xnew = ((m_weight-m1)*m_speedx + 2*m1*v1x) / (m1+m_weight);
+	float v2ynew = ((m_weight-m1)*m_speedy + 2*m1*v1y) / (m1+m_weight);
+
+	m_speedx = v2xnew;
+	m_speedy = v2ynew;
 }
