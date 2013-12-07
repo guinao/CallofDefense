@@ -6,7 +6,7 @@
 const int hasAI = 800;
 const int AIupperbound = 100;
 const float kNutWeight = 100.0f;
-const float kZombieWeight = 10.0f;
+const float kZombieWeight = 1000.0f;
 const float kHpFull = 1000.0f;
 const float kHpLow = 200.0f;
 const float kHpMid = 500.0f;

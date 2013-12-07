@@ -46,7 +46,7 @@ bool SpaceAdventureScene::init()
 		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("PvZres2/cardMenu.plist");
 
 		CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-
+		m_score = 0;
 		m_label = CCLabelAtlas::create("1:", "nums_font.png", 14, 21, '0');
 		m_label->setString("0");
 		m_label->setPosition(ccp(visibleSize.width/2, visibleSize.height-40));
@@ -301,6 +301,11 @@ void SpaceAdventureScene::updateScore(CCObject *pdata)
 	char msg[16];
 	sprintf(msg, "%d", m_score);
 	m_label->setString(msg);
+
+	CCScaleBy *action1 = CCScaleBy::create(0.2f, 3.0f);
+	CCActionInterval *action2 = action1->reverse();
+	CCSequence* action = CCSequence::create(action1, action2, NULL);
+	m_label->runAction(action);
 }
 
 void SpaceAdventureScene::restartAllZombies(float)

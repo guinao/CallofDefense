@@ -46,8 +46,8 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	//pDirector->runWithScene(DemoScene::scene());
 	//SimpleAudioEngine::sharedEngine()->vibrate(1000);
 
-	pDirector->runWithScene(SpaceAdventureScene::scene());
-	//pDirector->runWithScene(BootScene::scene());
+	//pDirector->runWithScene(SpaceAdventureScene::scene());
+	pDirector->runWithScene(BootScene::scene());
 	/* 调用场景管理器切换场景 */
     //SceneManager::sharedSceneManager()->changeScene(SceneManager::en_DemoScene);
     return true;
