@@ -29,6 +29,7 @@ public:
 	float getSpeedX(){	return m_speed * m_direction.x;	};
 	float getSpeedY(){	return m_speed * m_direction.y;	};
 	float getWeight(){	return m_weight;	};
+	void setState1(ZombieState s){	m_state1 = s;	};
 //	CCRect myBoundingBox();
 //	void onHurt(int hurt, float xspeed, float yspeed);
 
@@ -43,6 +44,8 @@ private:
 	CCAction* createFlyAwayAction();
 
 	void updateState2();
+	void updateFacing();
+	void scoreChanged();
 
 	CCSprite* m_sprite;
 	ZombieType m_type;
@@ -55,6 +58,7 @@ private:
 	float m_speed;
 	CCPoint m_direction;
 	int m_weight;
+	bool m_facingLeft;
 //	float m_speedxfloating; set as 2x of the walking speed;
 //	float m_speedyfloating;
 };

@@ -48,22 +48,35 @@ bool SpaceAdventureScene::init()
 		CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 
 		m_label = CCLabelAtlas::create("1:", "nums_font.png", 14, 21, '0');
-		m_label->setString("111");
+		m_label->setString("0");
 		m_label->setPosition(ccp(visibleSize.width/2, visibleSize.height-40));
 		this->addChild(m_label, 10, 1);
 
-		setAccelerometerEnabled(true);
-		scheduleUpdate();
-
+		createShield();
 		createNut();
 		//createZombies();
-		createShield();
 
 		NOTIFY->addObserver(
 			this, 
 			callfuncO_selector(SpaceAdventureScene::loseGame), 
 			kLoseMessage,
 			NULL);
+
+		NOTIFY->addObserver(
+			this, 
+			callfuncO_selector(SpaceAdventureScene::winGame), 
+			kWinMessage,
+			NULL);
+
+		NOTIFY->addObserver(
+			this,
+			callfuncO_selector(SpaceAdventureScene::updateScore),
+			kScoreChangedMessage,
+			NULL);
+
+		setAccelerometerEnabled(true);
+		scheduleUpdate();
+
 		bRet = true;
 	}while(0);
 
@@ -190,20 +203,36 @@ void SpaceAdventureScene::didAccelerate(CCAcceleration* pAccelerationValue)
 	double y = pAccelerationValue->y;
 	double z = pAccelerationValue->z;
 	double all = x*x + y*y + z*z;
-
+	all *= 100;
 	sprintf(output, "SpaceAdventureScene::didAccelerate:%f, %f, %f", x, y, z);
-	CCLOG(output);
+	//CCLOG(output);
 
 	m_nut->changeSpeedXBy(x*50);
 	m_nut->changeSpeedYBy(y*50);
-
+	if(all > 250)
+	{
+		for(int i=0; i<(int)m_zombies.size(); ++i)
+		{
+			//m_zombies[i]->setState1(en_ZombieStopped);
+			m_zombies[i]->unscheduleUpdate();
+		}
+		scheduleOnce(schedule_selector(SpaceAdventureScene::restartAllZombies), 5.0f);
+	}
 	//m_zombiemanager->didAccelerate(pAccelerationValue, m_label);
 }
 
+//void SpaceAdventureScene::onEnter()
+//{
+//	CCLayer::onEnter();
+//}
+//
 void SpaceAdventureScene::onExit()
 {
-	unscheduleUpdate();
 	setAccelerometerEnabled(false);
+	NOTIFY->removeObserver(this, kScoreChangedMessage);
+	NOTIFY->removeObserver(this, kLoseMessage);
+	NOTIFY->removeObserver(this, kWinMessage);
+	CCLayer::onExit();
 }
 
 void SpaceAdventureScene::createNut()
@@ -264,4 +293,21 @@ void SpaceAdventureScene::loseGame(CCObject*)
 void SpaceAdventureScene::winGame(CCObject*)
 {
 
+}
+
+void SpaceAdventureScene::updateScore(CCObject *pdata)
+{
+	m_score += dynamic_cast<CCInteger*>(pdata)->getValue();
+	char msg[16];
+	sprintf(msg, "%d", m_score);
+	m_label->setString(msg);
+}
+
+void SpaceAdventureScene::restartAllZombies(float)
+{
+	for(int i=0; i<(int)m_zombies.size(); ++i)
+	{
+		//m_zombies[i]->setState1(en_ZombieMoving);
+		m_zombies[i]->scheduleUpdate();
+	}
 }

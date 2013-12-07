@@ -20,6 +20,7 @@ public:
 	static CCScene* scene();
 	CREATE_FUNC(SpaceAdventureScene);
 	virtual bool init();
+	//virtual void onEnter();
 	virtual void onExit();
 
 	virtual void didAccelerate(CCAcceleration* pAccelerationValue);
@@ -31,8 +32,10 @@ private:
 	void createShield();
 	SpaceZombie* generateZombie();
 	void processCollide(SpaceNut* nut, SpaceZombie* zombie);
+	void restartAllZombies(float);
 	void loseGame(CCObject*);
 	void winGame(CCObject*);
+	void updateScore(CCObject *pdata);
 
 	ZombieManager *m_zombiemanager;
 	SpaceNut *m_nut;
@@ -41,6 +44,7 @@ private:
 	double m_shakevaluebound;
 	int m_generateSeed;
 
+	int m_score;
 	CCLabelAtlas* m_label;
 
 	vector<SpaceZombie*> m_zombies;

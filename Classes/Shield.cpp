@@ -84,6 +84,7 @@ void Shield::update(float delta)
 void Shield::onExit()
 {
 	setTouchEnabled(false);
+	m_shield = NULL;
 }
 
 void Shield::collideDetect()
@@ -138,7 +139,7 @@ static void printRect(const CCRect rect)
 
 void Shield::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 {
-	CCLOG("Shield::ccTouchesMoved");
+	//CCLOG("Shield::ccTouchesMoved");
 
 	if(m_touched && 1==pTouches->count())
 	{
@@ -168,7 +169,7 @@ void Shield::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 		dict->setObject(CCFloat::create(m_sprite->getPositionX()), 1);
 		dict->setObject(CCFloat::create(m_sprite->getPositionY()), 2);
 
-		NOTIFY->postNotification("ShieldPositonChange", dict);
+		NOTIFY->postNotification(kShieldPostionChanged, dict);
 	}
 }
 

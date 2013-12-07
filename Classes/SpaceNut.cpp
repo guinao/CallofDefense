@@ -9,7 +9,7 @@ SpaceNut::SpaceNut()
 	m_speedy = -50.0;
 	m_state = en_Floating;
 	m_rotateangle = 0.0;
-	m_weight = weightNut;
+	m_weight = kNutWeight;
 }
 
 SpaceNut::~SpaceNut()
@@ -51,17 +51,12 @@ bool SpaceNut::init()
 
 	NOTIFY->addObserver(this,
 		callfuncO_selector(SpaceNut::recvShieldPosition),
-		"ShieldPositonChange",
+		kShieldPostionChanged,
 		NULL
 		);
 	bRet = true;
 
 	return bRet;
-}
-
-void SpaceNut::onExit()
-{
-	unscheduleUpdate();
 }
 
 void SpaceNut::changeSpeedXBy(float delta)
@@ -126,6 +121,11 @@ void SpaceNut::update(float delta)
 
 
 
+}
+
+void SpaceNut::onExit()
+{
+	NOTIFY->removeObserver(this, kShieldPostionChanged);
 }
 
 void SpaceNut::moveInShield(float delta)
@@ -203,7 +203,7 @@ CCRect SpaceNut::myBoundingBox()
 
 void SpaceNut::recvShieldPosition(CCObject *pData)
 {
-	CCLOG("I got the message");
+	//CCLOG("I got the message");
 	CCDictionary *dict = dynamic_cast<CCDictionary*>(pData);
 
 	m_shieldpos[0] = dynamic_cast<CCFloat*>(dict->objectForKey(0))->getValue();
