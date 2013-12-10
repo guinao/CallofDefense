@@ -3,10 +3,12 @@
 //#include "pthread/pthread.h"
 
 Shield* Shield::m_shield = NULL;
+
 //pthread_mutex_t mutex;
 
 Shield::Shield()
 {
+	m_circle = NULL;
 }
 
 Shield::~Shield()
@@ -33,6 +35,8 @@ bool Shield::init()
 
 	do{
 		CC_BREAK_IF( ! CCLayer::init() );
+
+		initColorStrip();
 
 		texture[0] = CCTextureCache::sharedTextureCache()->addImage("PvZelements/Tallnut_body.png");
 		texture[1] = CCTextureCache::sharedTextureCache()->addImage("PvZelements/Tallnut_cracked1.png");
@@ -68,6 +72,74 @@ bool Shield::init()
 	return bRet;
 }
 
+void Shield::initColorStrip()
+{
+	float gradientAlpha = 0.7f;
+	m_colorstep = 300;
+	ccColor4B color[6];
+	color[0].r = 0;
+	color[0].g = 0;
+	color[0].b = 0;
+	color[0].a = 178;
+
+	color[1].r = 64;
+	color[1].g = 44;
+	color[1].b = 58;
+	color[1].a = 178;
+
+	color[2].r = 67;
+	color[2].g = 52;
+	color[2].b = 89;
+	color[2].a = 178;
+
+	color[3].r = 151;
+	color[3].g = 122;
+	color[3].b = 191;
+	color[3].a = 178;
+
+	color[4].r = 144;
+	color[4].g = 141;
+	color[4].b = 242;
+	color[4].a = 178;
+
+	color[5].r = 172;
+	color[5].g = 183;
+	color[5].b = 242;
+	color[5].a = 178;
+
+	for(int i=0; i<5; ++i)
+	{
+		m_basecolor[i] = ccc4FFromccc4B(color[i+1]);
+	}
+	for(int i=0; i<5; ++i)
+	{
+		m_deltacolor[i].r = (m_basecolor[i+1].r - m_basecolor[i].r) / m_colorstep;
+		m_deltacolor[i].g = (m_basecolor[i+1].g - m_basecolor[i].g) / m_colorstep;
+		m_deltacolor[i].b = (m_basecolor[i+1].b - m_basecolor[i].b) / m_colorstep;
+		m_deltacolor[i].b = 1.0f / m_colorstep;
+	}
+}
+
+void Shield::drawSolidCycle(ccColor4F color, CCPoint center, float radius, int segs)
+{
+	float coef = 2.0f * (float) (M_PI) /segs;
+	float gradientAlpha = 0.7f;
+	CCPoint *vertices = new CCPoint[segs+2];
+
+	int nVertices = 0;
+
+	float rads = 0.0f;
+	for(int i=0; i<=segs; ++i)
+	{
+		float x = radius * cosf(rads) + center.x;
+		float y = radius * sinf(rads) + center.y;
+		vertices[i] = ccp(x, y);
+		rads += coef;
+	}
+
+	ccDrawSolidPoly(vertices, segs, color);
+}
+
 void Shield::drawShieldRegion()
 {
 	if(m_zombieinshield > 0)
@@ -76,24 +148,34 @@ void Shield::drawShieldRegion()
 		ccDrawColor4B(255, 0, 0, 255);
 		ccDrawCircle(m_sprite->getPosition(), m_radius, 0, 1000, false);
 	}
-	else
+
+	int nStripes = ((rand() % 4) + 1) * 2;
+	nStripes = 5;
+	
+	float dr = m_radius / nStripes;
+	static int cc = 0;
+	cc = (cc+1) % m_colorstep;
+	for(int i=nStripes; i>0 ;--i)
 	{
-		glLineWidth( 5.0f );
-		ccDrawColor4B(0, 255, 0, 255);
-		ccDrawCircle(m_sprite->getPosition(), m_radius, 0, 1000, false);
+		ccColor4F color = m_basecolor[i];
+		color.r += cc * m_deltacolor[i].r;
+		color.g += cc * m_deltacolor[i].g;
+		color.b += cc * m_deltacolor[i].b;
+		drawSolidCycle(color, m_position, i*dr, 1000);
 	}
 }
 
 void Shield::draw()
 {
-//	drawShieldRegion();
+	drawShieldRegion();
 }
 
 void Shield::update(float delta)
 {
 	static int cnt = 0;
-	if( ++cnt  %30 == 0 )
-		this->genBackground();
+	if( ++cnt  %30 == 0 ){
+		//	this->genBackground();
+	}
 }
 
 void Shield::onEnter()
@@ -118,8 +200,8 @@ void Shield::onEnter()
 		kZombieLeaveMessage,
 		NULL);
 
-	m_background = NULL;
-	genBackground();
+//	m_background = NULL;
+//	genBackground();
 
 	scheduleUpdate();
 }
@@ -213,7 +295,7 @@ void Shield::ccTouchesMoved(CCSet *pTouches, CCEvent *pEvent)
 
 		m_position = ccp(x, y);
 		m_sprite->setPosition(m_position);
-		m_background->setPosition(m_position);
+//		m_background->setPosition(m_position);
 
 		m_oldtouchpoint = position;
 
@@ -301,55 +383,6 @@ ccColor4F Shield::randomBrightColor()
 			return ccc4FFromccc4B(randomColor);
 		}
 	}
-}
-
-CCSprite* Shield::spriteWithColor(ccColor4F bgColor, float textureWidth, float textureHeight)
-{
-	// 1: Create new CCRenderTexture
-	CCRenderTexture *rt = CCRenderTexture::create(textureWidth, textureHeight);
-
-	// 2: Call CCRenderTexture:begin
-	rt->beginWithClear(bgColor.r, bgColor.g, bgColor.b, bgColor.a);
-
-
-	// 2.5
-	this->setShaderProgram(CCShaderCache::sharedShaderCache()->programForKey(kCCShader_PositionColor));
-
-	CC_NODE_DRAW_SETUP();
-
-	// 3: Draw into the texture
-	float gradientAlpha = 0.7f;
-	CCPoint vertices[4];
-	ccColor4F colors[4];
-	int nVertices = 0;
-
-	vertices[nVertices] = CCPointMake(0, 0);
-	colors[nVertices++] = ccc4f(0, 0, 0, 0);
-	vertices[nVertices] = CCPointMake(textureWidth, 0);
-	colors[nVertices++] = ccc4f(0, 0, 0, 0);
-	vertices[nVertices] = CCPointMake(0, textureHeight);
-	colors[nVertices++] = ccc4f(0, 0, 0, gradientAlpha);
-	vertices[nVertices] = CCPointMake(textureWidth, textureHeight);
-	colors[nVertices++] = ccc4f(0, 0, 0, gradientAlpha);
-
-	ccGLEnableVertexAttribs(kCCVertexAttribFlag_Position | kCCVertexAttribFlag_Color);
-
-	glVertexAttribPointer(kCCVertexAttrib_Position, 2, GL_FLOAT, GL_FALSE, 0, vertices);
-	glVertexAttribPointer(kCCVertexAttrib_Color, 4, GL_FLOAT, GL_FALSE, 0, colors);
-	glBlendFunc(CC_BLEND_SRC, CC_BLEND_DST);
-	glDrawArrays(GL_TRIANGLE_STRIP, 0, (GLsizei)nVertices);
-	// 3: Draw into the texture
-	// You'll add this later
-	CCSprite *noise = CCSprite::create("Noise.png");
-	ccBlendFunc blendFunc = {GL_DST_COLOR, GL_ZERO};
-	noise->setBlendFunc(blendFunc);
-	noise->setPosition(ccp(textureWidth / 2, textureHeight / 2));
-	noise->visit();
-	// 4: Call CCRenderTexture:end
-	rt->end();
-
-	// 5: Create a new Sprite from the texture
-	return CCSprite::createWithTexture(rt->getSprite()->getTexture());
 }
 
 CCSprite * Shield::spriteWithColor1(ccColor4F c1, ccColor4F c2, float textureWidth, float textureHeight, int nStripes)

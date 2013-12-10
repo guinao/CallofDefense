@@ -296,12 +296,12 @@ bool BootScene::init()
         CC_BREAK_IF(! CCLayer::init());
 		CCSize winSize = CCDirector::sharedDirector()->getWinSize();
         bRet = true;
-        // G::
+		// G::
 		CCSprite* G = CCSprite::create("G.png");
 		G->setPosition(ccp(winSize.width / 8 * 1, winSize.height * 3 / 4));
 		this->addChild(G, 10);
-		CCActionInterval *GAction1 = CCFadeTo::create(0.35, 100);
-		CCActionInterval *GAction2 = CCFadeTo::create(0.35, 200);
+		CCActionInterval *GAction1 = CCFadeTo::create(0.37, 100);
+		CCActionInterval *GAction2 = CCFadeTo::create(0.37, 200);
 		CCFiniteTimeAction *GAction3 = CCRotateBy::create(0.25,5);
 		CCFiniteTimeAction *GAction4 = CCRotateBy::create(0.25,-10);
 		CCFiniteTimeAction *GAction5 = CCRotateBy::create(0.25,5);
@@ -309,19 +309,19 @@ bool BootScene::init()
 		CCFiniteTimeAction *GAction6 = CCScaleTo::create(0.25, 1.25);
 		CCFiniteTimeAction *GAction7 = CCScaleTo::create(0.25, 0.8);
 		CCFiniteTimeAction *GAction8 = CCScaleTo::create(0.25, 1);
-		
+
 		CCActionInterval *GAct1 = CCSequence::create(GAction1, GAction2, NULL);
 		CCActionInterval *GAct2 = CCSequence::create(GAction3, GAction4, GAction5, NULL);
 		CCActionInterval *GAct3 = CCSequence::create(GAction6, GAction7, GAction8, NULL);
 		CCActionInterval *GAct =  CCSpawn::create(GAct1, GAct2, GAct3, NULL);
 		G->runAction(CCRepeatForever::create(GAct));
 
-        // R::
+		// R::
 		CCSprite* R = CCSprite::create("R.png");
 		R->setPosition(ccp(winSize.width / 8 * 2, winSize.height * 3 / 4));
 		this->addChild(R, 10);
-		CCActionInterval *RAction1 = CCFadeTo::create(0.35, 100);
-		CCActionInterval *RAction2 = CCFadeTo::create(0.35, 200);
+		CCActionInterval *RAction1 = CCFadeTo::create(0.37, 100);
+		CCActionInterval *RAction2 = CCFadeTo::create(0.37, 200);
 		CCFiniteTimeAction *RAction3 = CCRotateBy::create(0.25,5);
 		CCFiniteTimeAction *RAction4 = CCRotateBy::create(0.25,-10);
 		CCFiniteTimeAction *RAction5 = CCRotateBy::create(0.25,5);
@@ -329,19 +329,19 @@ bool BootScene::init()
 		CCFiniteTimeAction *RAction6 = CCScaleTo::create(0.25, 1.25);
 		CCFiniteTimeAction *RAction7 = CCScaleTo::create(0.25, 0.8);
 		CCFiniteTimeAction *RAction8 = CCScaleTo::create(0.25, 1);
-		
+
 		CCActionInterval *RAct1 = CCSequence::create(RAction1, RAction2, NULL);
 		CCActionInterval *RAct2 = CCSequence::create(RAction3, RAction4, RAction5, NULL);
 		CCActionInterval *RAct3 = CCSequence::create(RAction6, RAction7, RAction8, NULL);
 		CCActionInterval *RAct =  CCSpawn::create(RAct1, RAct2, RAct3, NULL);
 		R->runAction(CCRepeatForever::create(RAct));
 
-        // A::
+		// A::
 		CCSprite* A = CCSprite::create("A.png");
 		A->setPosition(ccp(winSize.width / 8 * 3, winSize.height * 3 / 4));
 		this->addChild(A, 10);
-		CCActionInterval *AAction1 = CCFadeTo::create(0.35, 100);
-		CCActionInterval *AAction2 = CCFadeTo::create(0.35, 200);
+		CCActionInterval *AAction1 = CCFadeTo::create(0.37, 100);
+		CCActionInterval *AAction2 = CCFadeTo::create(0.37, 200);
 		CCFiniteTimeAction *AAction3 = CCRotateBy::create(0.25,5);
 		CCFiniteTimeAction *AAction4 = CCRotateBy::create(0.25,-10);
 		CCFiniteTimeAction *AAction5 = CCRotateBy::create(0.25,5);
@@ -349,19 +349,19 @@ bool BootScene::init()
 		CCFiniteTimeAction *AAction6 = CCScaleTo::create(0.25, 1.25);
 		CCFiniteTimeAction *AAction7 = CCScaleTo::create(0.25, 0.8);
 		CCFiniteTimeAction *AAction8 = CCScaleTo::create(0.25, 1);
-		
+
 		CCActionInterval *AAct1 = CCSequence::create(AAction1, AAction2, NULL);
 		CCActionInterval *AAct2 = CCSequence::create(AAction3, AAction4, AAction5, NULL);
 		CCActionInterval *AAct3 = CCSequence::create(AAction6, AAction7, AAction8, NULL);
 		CCActionInterval *AAct =  CCSpawn::create(AAct1, AAct2, AAct3, NULL);
 		A->runAction(CCRepeatForever::create(AAct));
 
-        // V::
+		// V::
 		CCSprite* V = CCSprite::create("V.png");
 		V->setPosition(ccp(winSize.width / 8 * 4, winSize.height * 3 / 4));
 		this->addChild(V, 10);
-		CCActionInterval *VAction1 = CCFadeTo::create(0.35, 100);
-		CCActionInterval *VAction2 = CCFadeTo::create(0.35, 200);
+		CCActionInterval *VAction1 = CCFadeTo::create(0.37, 100);
+		CCActionInterval *VAction2 = CCFadeTo::create(0.37, 200);
 		CCFiniteTimeAction *VAction3 = CCRotateBy::create(0.25,5);
 		CCFiniteTimeAction *VAction4 = CCRotateBy::create(0.25,-10);
 		CCFiniteTimeAction *VAction5 = CCRotateBy::create(0.25,5);
@@ -369,19 +369,19 @@ bool BootScene::init()
 		CCFiniteTimeAction *VAction6 = CCScaleTo::create(0.25, 1.25);
 		CCFiniteTimeAction *VAction7 = CCScaleTo::create(0.25, 0.8);
 		CCFiniteTimeAction *VAction8 = CCScaleTo::create(0.25, 1);
-		
+
 		CCActionInterval *VAct1 = CCSequence::create(VAction1, VAction2, NULL);
 		CCActionInterval *VAct2 = CCSequence::create(VAction3, VAction4, VAction5, NULL);
 		CCActionInterval *VAct3 = CCSequence::create(VAction6, VAction7, VAction8, NULL);
 		CCActionInterval *VAct =  CCSpawn::create(VAct1, VAct2, VAct3, NULL);
 		V->runAction(CCRepeatForever::create(VAct));
 
-        // I::
+		// I::
 		CCSprite* I = CCSprite::create("I.png");
 		I->setPosition(ccp(winSize.width / 8 * 5, winSize.height * 3 / 4));
 		this->addChild(I, 10);
-		CCActionInterval *IAction1 = CCFadeTo::create(0.35, 100);
-		CCActionInterval *IAction2 = CCFadeTo::create(0.35, 200);
+		CCActionInterval *IAction1 = CCFadeTo::create(0.37, 100);
+		CCActionInterval *IAction2 = CCFadeTo::create(0.37, 200);
 		CCFiniteTimeAction *IAction3 = CCRotateBy::create(0.25,5);
 		CCFiniteTimeAction *IAction4 = CCRotateBy::create(0.25,-10);
 		CCFiniteTimeAction *IAction5 = CCRotateBy::create(0.25,5);
@@ -389,19 +389,19 @@ bool BootScene::init()
 		CCFiniteTimeAction *IAction6 = CCScaleTo::create(0.25, 1.25);
 		CCFiniteTimeAction *IAction7 = CCScaleTo::create(0.25, 0.8);
 		CCFiniteTimeAction *IAction8 = CCScaleTo::create(0.25, 1);
-		
+
 		CCActionInterval *IAct1 = CCSequence::create(IAction1, IAction2, NULL);
 		CCActionInterval *IAct2 = CCSequence::create(IAction3, IAction4, IAction5, NULL);
 		CCActionInterval *IAct3 = CCSequence::create(IAction6, IAction7, IAction8, NULL);
 		CCActionInterval *IAct =  CCSpawn::create(IAct1, IAct2, IAct3, NULL);
 		I->runAction(CCRepeatForever::create(IAct));
 
-        // T::
+		// T::
 		CCSprite* T = CCSprite::create("T.png");
 		T->setPosition(ccp(winSize.width / 8 * 6, winSize.height * 3 / 4));
 		this->addChild(T, 10);
-		CCActionInterval *TAction1 = CCFadeTo::create(0.35, 100);
-		CCActionInterval *TAction2 = CCFadeTo::create(0.35, 200);
+		CCActionInterval *TAction1 = CCFadeTo::create(0.37, 100);
+		CCActionInterval *TAction2 = CCFadeTo::create(0.37, 200);
 		CCFiniteTimeAction *TAction3 = CCRotateBy::create(0.25,5);
 		CCFiniteTimeAction *TAction4 = CCRotateBy::create(0.25,-10);
 		CCFiniteTimeAction *TAction5 = CCRotateBy::create(0.25,5);
@@ -409,19 +409,19 @@ bool BootScene::init()
 		CCFiniteTimeAction *TAction6 = CCScaleTo::create(0.25, 1.25);
 		CCFiniteTimeAction *TAction7 = CCScaleTo::create(0.25, 0.8);
 		CCFiniteTimeAction *TAction8 = CCScaleTo::create(0.25, 1);
-		
+
 		CCActionInterval *TAct1 = CCSequence::create(TAction1, TAction2, NULL);
 		CCActionInterval *TAct2 = CCSequence::create(TAction3, TAction4, TAction5, NULL);
 		CCActionInterval *TAct3 = CCSequence::create(TAction6, TAction7, TAction8, NULL);
 		CCActionInterval *TAct =  CCSpawn::create(TAct1, TAct2, TAct3, NULL);
 		T->runAction(CCRepeatForever::create(TAct));
 
-        // Y::
+		// Y::
 		CCSprite* Y = CCSprite::create("Y.png");
 		Y->setPosition(ccp(winSize.width / 8 * 7, winSize.height * 3 / 4));
 		this->addChild(Y, 10);
-		CCActionInterval *YAction1 = CCFadeTo::create(0.35, 100);
-		CCActionInterval *YAction2 = CCFadeTo::create(0.35, 200);
+		CCActionInterval *YAction1 = CCFadeTo::create(0.37, 100);
+		CCActionInterval *YAction2 = CCFadeTo::create(0.37, 200);
 		CCFiniteTimeAction *YAction3 = CCRotateBy::create(0.25,5);
 		CCFiniteTimeAction *YAction4 = CCRotateBy::create(0.25,-10);
 		CCFiniteTimeAction *YAction5 = CCRotateBy::create(0.25,5);
@@ -429,31 +429,30 @@ bool BootScene::init()
 		CCFiniteTimeAction *YAction6 = CCScaleTo::create(0.25, 1.25);
 		CCFiniteTimeAction *YAction7 = CCScaleTo::create(0.25, 0.8);
 		CCFiniteTimeAction *YAction8 = CCScaleTo::create(0.25, 1);
-		
+
 		CCActionInterval *YAct1 = CCSequence::create(YAction1, YAction2, NULL);
 		CCActionInterval *YAct2 = CCSequence::create(YAction3, YAction4, YAction5, NULL);
 		CCActionInterval *YAct3 = CCSequence::create(YAction6, YAction7, YAction8, NULL);
 		CCActionInterval *YAct =  CCSpawn::create(YAct1, YAct2, YAct3, NULL);
 		Y->runAction(CCRepeatForever::create(YAct));
 
-	// Icon
+		// Icon
 		_starticon = CCSprite::create("voyage.png");
 		_starticon->setScale(0.2);
-		_starticon->setPosition(ccp(winSize.width / 2, winSize.height * 1 / 4));
+		_starticon->setPosition(ccp(winSize.width / 2, winSize.height * 3 / 10));
 		this->addChild(_starticon, 10);
-		CCActionInterval *iconAction1 = CCFadeTo::create(1, 150);
-		CCActionInterval *iconAction2 = CCFadeTo::create(1, 200);
-		CCFiniteTimeAction *iconAction3 = CCRotateBy::create(2, 360);
-		// CCFiniteTimeAction *iconAction4 = CCRotateBy::create(1,-10);
-		// CCFiniteTimeAction *iconAction5 = CCRotateBy::create(1,5);
-		// CCFiniteTimeAction *iconAction6 = CCTintTo::create(1.5, 214, 111, 111);
-		// CCFiniteTimeAction *iconAction7 = CCTintTo::create(1.5, 86, 191, 232);
-		
-		CCActionInterval *iconAct1 = CCSequence::create(iconAction1, iconAction2, NULL);
-		//CCActionInterval *iconAct2 = CCSequence::create(iconAction3, iconAction4, NULL);
-		// CCActionInterval *iconAct3 = CCSequence::create(iconAction6, iconAction7, NULL);
-		CCActionInterval *iconAct =  CCSpawn::create(iconAction1, iconAction3, NULL);
+		CCActionInterval *iconAction1 = CCFadeTo::create(0.37, 150);
+		CCActionInterval *iconAction2 = CCFadeTo::create(0.37, 200);
+		CCFiniteTimeAction *iconAction3 = CCRotateBy::create(1.5, 360);
+		CCFiniteTimeAction *iconAction4 = CCScaleTo::create(0.25, 0.25);
+		CCFiniteTimeAction *iconAction5 = CCScaleTo::create(0.25, 0.16);
+		CCFiniteTimeAction *iconAction6 = CCScaleTo::create(0.25, 0.2);
+
+		CCActionInterval *iconAct1 = CCSequence::create(iconAction1, iconAction2, iconAction1, iconAction2, NULL);
+		CCActionInterval *iconAct2 = CCSequence::create(iconAction4, iconAction5, iconAction6, iconAction4, iconAction5, iconAction6,  NULL);
+		CCActionInterval *iconAct =  CCSpawn::create(iconAct1, iconAct2, iconAction3, NULL);
 		_starticon->runAction(CCRepeatForever::create(iconAct));
+
     } while (0);
 
     return bRet;

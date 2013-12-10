@@ -21,8 +21,8 @@ CCScene* SpaceAdventureScene::scene()
 		CC_BREAK_IF(! scene);
 
 
-		//ParticleLayer *layer1 = ParticleLayer::create();
-		//CC_BREAK_IF(! layer1);
+		ParticleLayer *layer1 = ParticleLayer::create();
+		CC_BREAK_IF(! layer1);
 
 		Shield *layer2 = Shield::getShieldSingleton();
 		CC_BREAK_IF(! layer2);
@@ -30,7 +30,7 @@ CCScene* SpaceAdventureScene::scene()
 		SpaceAdventureScene* layer3 = SpaceAdventureScene::create();
 		CC_BREAK_IF(! layer3);
 
-		//scene->addChild(layer1, 100);
+		scene->addChild(layer1, 100);
 		scene->addChild(layer2, 200);
 		scene->addChild(layer3, 300);
 
@@ -51,7 +51,7 @@ bool SpaceAdventureScene::init()
 
 		CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 		m_score = 0;
-		m_label = CCLabelAtlas::create("1:", "nums_font.png", 14, 21, '0');
+		m_label = CCLabelAtlas::create("1946:", "nums_font.png", 12, 32, '.');
 		m_label->setString("0");
 		m_label->setPosition(ccp(visibleSize.width/2, visibleSize.height-40));
 		this->addChild(m_label, 10, 1);
@@ -280,7 +280,7 @@ SpaceZombie* SpaceAdventureScene::generateZombie()
 		case 3:	// from buttom
 			startpos = ccp(rand()%static_cast<int>(size.width), 0);
 			break;
-		} 
+		}
 		zombie = SpaceZombie::createSpaceZombie(type, startpos);
 	}
 

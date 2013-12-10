@@ -57,11 +57,16 @@ private:
 	//////////////////////////////////////////////////////////////////////////
 
 	void genBackground();
-	CCSprite* spriteWithColor(ccColor4F bgColor, float textureWidth, float textureHeight);
 	ccColor4F randomBrightColor();
 	CCSprite * spriteWithColor1(ccColor4F c1, ccColor4F c2, float textureWidth, float textureHeight, int nStripes);
+	void drawSolidCycle(ccColor4F color, CCPoint center, float radius, int segs);
+	void initColorStrip();
 
 	CCSprite *m_background;
+	CCSprite *m_circle;
+	ccColor4F m_basecolor[5];
+	ccColor4F m_deltacolor[5];
+	int m_colorstep;
 };
 
 #endif

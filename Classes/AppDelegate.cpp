@@ -25,7 +25,7 @@ AppDelegate::AppDelegate()
 AppDelegate::~AppDelegate() 
 {
 //		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/peashooter.plist");
-		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/plants_type.plist");
+//		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/plants_type.plist");
 		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/zombies_type.plist");
 //		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/plant_sun.plist");
 //		CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/cardMenu.plist");
@@ -37,13 +37,15 @@ bool AppDelegate::applicationDidFinishLaunching() {
 	CCDirector *pDirector = CCDirector::sharedDirector();
 	pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
 
-	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(800, 600, kResolutionShowAll);
+	CCEGLView::sharedOpenGLView()->setDesignResolutionSize(1024, 512, kResolutionShowAll);
+
+	SimpleAudioEngine::sharedEngine()->playBackgroundMusic("music/05 the first million.mp3");
 
 	pDirector->setDisplayStats(true);
 
 	pDirector->setAnimationInterval(1.0 / 60);
 
-	//pDirector->runWithScene(DemoScene::scene());
+	pDirector->runWithScene(DemoScene::scene());
 	//SimpleAudioEngine::sharedEngine()->vibrate(1000);
 
 	//pDirector->runWithScene(SpaceAdventureScene::scene());

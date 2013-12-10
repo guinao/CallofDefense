@@ -32,7 +32,9 @@ bool SpaceZombie::init(ZombieType type, CCPoint pos)
 		m_facingLeft = true;
 		m_weight = kZombieWeight;
 		m_aicount = 0;
-		
+
+		CocosDenshion::SimpleAudioEngine::sharedEngine()->preloadEffect("music/crash1.wav");
+
 		char name[64], picture[64];
 		int numFrames;
 		switch(type)
@@ -190,12 +192,12 @@ void SpaceZombie::performMove(float delta)
 		case en_Floating:
 			m_speed = kZombieSpeedFloating;
 			m_sprite->runAction(createFloatingAction());
-			//NOTIFY->postNotification(kZombieLeaveMessage, NULL);
+			NOTIFY->postNotification(kZombieLeaveMessage, NULL);
 			break;
 		case en_InShield:
 			m_speed = kZombieSpeedInShield;
 			m_sprite->runAction(createWalkingAction());
-			//NOTIFY->postNotification(kZombiesOnBoardMessage, NULL);
+			NOTIFY->postNotification(kZombiesOnBoardMessage, NULL);
 			break;
 		}
 		m_state2 = state;
@@ -235,7 +237,7 @@ void SpaceZombie::performMove(float delta)
 		if(m_sprite->boundingBox().containsPoint(ccp(x,y)))
 		{
 			m_state1 = en_ZombieAttacking;
-			NOTIFY->postNotification(kZombiesOnBoardMessage, NULL);
+			//NOTIFY->postNotification(kZombiesOnBoardMessage, NULL);
 		}
 		break;
 	}
@@ -254,7 +256,6 @@ void SpaceZombie::hit(float v1x, float v1y, float m1)
 	char msg[128];
 	sprintf(msg,"Before hit, direction: %f, %f", m_direction.x, m_direction.y);
 //	CCLOG(msg);
-
 	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("music/crash1.wav");
 	updateState2();
 
@@ -334,6 +335,7 @@ void SpaceZombie::performAttacking(float delta)
 	{
 		m_state1 = en_ZombieMoving;
 		NOTIFY->postNotification(kZombieLeaveMessage, NULL);
+		updateState2();
 	}
 }
 

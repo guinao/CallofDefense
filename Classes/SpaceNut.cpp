@@ -60,7 +60,7 @@ void SpaceNut::changeSpeedXBy(float delta)
 		m_speedx += delta;
 		break;
 	case en_InShield:
-		m_speedx = delta*10;
+		m_speedx += delta*10;
 		break;
 	default:
 		m_speedx += delta;
@@ -76,7 +76,7 @@ void SpaceNut::changeSpeedYBy(float delta)
 		m_speedy += delta;
 		break;
 	case en_InShield:
-		m_speedy = delta*10;
+		m_speedy += delta*10;
 		break;
 	default:
 		m_speedy += delta;
@@ -160,9 +160,11 @@ void SpaceNut::moveInShield(float delta)
 		m_sprite->setPosition(current);
 	}
 
+	m_speedx *= 0.5;
+	m_speedy *= 0.5;
 
-	m_speedx = 0.0f;
-	m_speedy = 0.0f;
+//	m_speedx = 0.0f;
+//	m_speedy = 0.0f;
 }
 
 void SpaceNut::moveInSpace(float delta)
