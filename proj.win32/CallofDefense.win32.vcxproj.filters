@@ -76,6 +76,9 @@
     <ClCompile Include="..\Classes\BootScene.cpp">
       <Filter>source</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\ParticleLayer.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Classes\AppDelegate.h">
@@ -127,6 +130,9 @@
       <Filter>include</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\BootScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\ParticleLayer.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

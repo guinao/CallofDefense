@@ -16,6 +16,9 @@ bld/
 [Bb]in/
 [Oo]bj
 /proj.win32/Debug.win32/
+/proj.win32/Release.win32/
+Release.win32/
+
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
 

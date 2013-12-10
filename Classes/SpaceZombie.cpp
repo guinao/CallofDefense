@@ -1,3 +1,4 @@
+#include "SimpleAudioEngine.h"
 #include "SpaceZombie.h"
 #include "Shield.h"
 
@@ -31,42 +32,42 @@ bool SpaceZombie::init(ZombieType type, CCPoint pos)
 		m_facingLeft = true;
 		m_weight = kZombieWeight;
 		m_aicount = 0;
-
+		
 		char name[64], picture[64];
 		int numFrames;
 		switch(type)
 		{
 		case en_BucketheadZombie:
 			numFrames = 15;
-			m_speed = 5.0f;
+			m_speed = kZombieSpeedFloating;
 			m_hp = 100;
 			m_ai = 20;
 			strcpy(name, "BucketheadZombie");
 			break;
 		case en_ConeheadZombie:
 			numFrames = 21;
-			m_speed = 5.0f;
+			m_speed = kZombieSpeedFloating;
 			m_hp = 100;
 			m_ai = 40;
 			strcpy(name, "ConeheadZombie");
 			break;
 		case en_FlagZombie:
 			numFrames = 12;
-			m_speed = 5.0f;
+			m_speed = kZombieSpeedFloating;
 			m_hp = 100;
 			m_ai = 80;
 			strcpy(name, "FlagZombie");
 			break;
 		case en_NormalZombie:
 			numFrames = 22;
-			m_speed = 5.0f;
+			m_speed = kZombieSpeedFloating;
 			m_hp = 100;
 			m_ai = 10;
 			strcpy(name, "zombie");
 			break;
 		default:
 			numFrames = 22;
-			m_speed = 5.0f;
+			m_speed = kZombieSpeedFloating;
 			m_hp = 100;
 			m_ai = 10;
 			strcpy(name, "zombie");
@@ -80,8 +81,6 @@ bool SpaceZombie::init(ZombieType type, CCPoint pos)
 		m_sprite->setScale(2.0);
 
 		m_sprite->runAction(createFloatingAction());
-
-		addChild(m_sprite, 18);
 
 		Shield *shield = Shield::getShieldSingleton();
 		float r, x, y;
@@ -145,10 +144,10 @@ void SpaceZombie::update(float delta)
 		performAttacking(delta);
 		break;
 	case en_ZombieDead:
-		CCLOG("Zombie Dead");
+		//CCLOG("Zombie Dead");
 		break;
 	case en_ZombieStopped:
-		CCLOG("Zombie Stoped");
+		//CCLOG("Zombie Stoped");
 		break;
 	case en_ZombieFlyAway:
 		performFlyAway(delta);
@@ -189,10 +188,14 @@ void SpaceZombie::performMove(float delta)
 		switch(state)
 		{
 		case en_Floating:
+			m_speed = kZombieSpeedFloating;
 			m_sprite->runAction(createFloatingAction());
+			//NOTIFY->postNotification(kZombieLeaveMessage, NULL);
 			break;
 		case en_InShield:
+			m_speed = kZombieSpeedInShield;
 			m_sprite->runAction(createWalkingAction());
+			//NOTIFY->postNotification(kZombiesOnBoardMessage, NULL);
 			break;
 		}
 		m_state2 = state;
@@ -210,8 +213,8 @@ void SpaceZombie::performMove(float delta)
 			updateFacing();
 			m_aicount = 0;
 		}
-		x = m_sprite->getPositionX() + m_direction.x * m_speed * 2 * delta;
-		y = m_sprite->getPositionY() + m_direction.y * m_speed * 2 * delta;
+		x = m_sprite->getPositionX() + m_direction.x * m_speed * delta;
+		y = m_sprite->getPositionY() + m_direction.y * m_speed * delta;
 		m_sprite->setPosition(ccp(x,y));
 		break;
 	case en_InShield:
@@ -232,6 +235,7 @@ void SpaceZombie::performMove(float delta)
 		if(m_sprite->boundingBox().containsPoint(ccp(x,y)))
 		{
 			m_state1 = en_ZombieAttacking;
+			NOTIFY->postNotification(kZombiesOnBoardMessage, NULL);
 		}
 		break;
 	}
@@ -239,7 +243,7 @@ void SpaceZombie::performMove(float delta)
 
 void SpaceZombie::performFlyAway(float delta)
 {
-	CCLOG("SpaceZombie::performFlyAway");
+//	CCLOG("SpaceZombie::performFlyAway");
 	float x = m_sprite->getPositionX() + m_direction.x * m_speed * delta;
 	float y = m_sprite->getPositionY() + m_direction.y * m_speed * delta;
 	m_sprite->setPosition(ccp(x,y));
@@ -251,6 +255,7 @@ void SpaceZombie::hit(float v1x, float v1y, float m1)
 	sprintf(msg,"Before hit, direction: %f, %f", m_direction.x, m_direction.y);
 //	CCLOG(msg);
 
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("music/crash1.wav");
 	updateState2();
 
 	if(m_state2 == en_Floating)
@@ -258,28 +263,13 @@ void SpaceZombie::hit(float v1x, float v1y, float m1)
 		float v2x = getSpeedX();
 		float v2y = getSpeedY();
 
-		float v2xnew = ((m_weight-m1)*v2x + 2*m1*v1x) / (m1+m_weight);
-		float v2ynew = ((m_weight-m1)*v2y + 2*m1*v1y) / (m1+m_weight);
-		//float v2xnew = v1x * m_weight / m1;
-		//float v2ynew = v1y * m_weight / m1;
-
-		if(fabs(v2xnew) > 0.1 && fabs(v2ynew) > 0.1)
-		{
-			m_speed = sqrt(v2xnew*v2xnew + v2ynew*v2ynew) * 100.0f;
-			m_direction = ccp(v2xnew, v2ynew);
-			normalize(m_direction);
-//			updateFacing();
-		}
-		else
-		{
-			m_direction.x = -m_direction.x;
-			m_direction.y = -m_direction.y;
-			m_speed *= 100.0f;
-		}
+		m_direction.x = -m_direction.x;
+		m_direction.y = -m_direction.y;
+		m_speed = kZombieSpeedFlyAway;
 
 		m_sprite->stopAllActions();
 		m_sprite->runAction(createFlyAwayAction());
-
+		
 		m_state1 = en_ZombieFlyAway;
 		scoreChanged();
 
@@ -291,12 +281,44 @@ void SpaceZombie::hit(float v1x, float v1y, float m1)
 		m_hp -= m1;
 		if(m_hp <= 0)
 		{
-			m_state1 = en_ZombieDead;
+			m_facingLeft = v1x < 0 ? true : false;
 			scoreChanged();
-			setVisible(false);
-			removeFromParent();
+			performDead();
 		}
 	}
+}
+
+void SpaceZombie::performDead()
+{
+	if(en_ZombieAttacking == m_state1)
+	{
+		NOTIFY->postNotification(kZombieLeaveMessage, NULL);
+	}
+
+	m_state1 = en_ZombieFlyAway;
+	m_sprite->stopAllActions();
+
+	float rot = 90.0f;
+	if(!m_facingLeft)
+	{
+		rot = -rot;
+	}
+	if(m_sprite->isFlipX())
+	{
+		rot = -rot;
+	}
+	CCRotateTo *action1 = CCRotateTo::create(0.2f, rot);
+	CCFadeOut *action2 = CCFadeOut::create(5.0f);
+	CCTintTo *action3 = CCTintTo::create(5.0f, 0, 0, 0);
+	CCCallFunc *action4 = CCCallFunc::create(this,callfunc_selector(SpaceZombie::finishDeadAction));
+	CCSequence *action  = CCSequence::create(action1, action2, action3, action4, NULL);
+	m_sprite->runAction(action);
+
+}
+
+void SpaceZombie::finishDeadAction()
+{
+	m_state1 = en_ZombieDead;
 }
 
 void SpaceZombie::performAttacking(float delta)
@@ -311,6 +333,7 @@ void SpaceZombie::performAttacking(float delta)
 	else
 	{
 		m_state1 = en_ZombieMoving;
+		NOTIFY->postNotification(kZombieLeaveMessage, NULL);
 	}
 }
 
@@ -365,7 +388,7 @@ CCAction* SpaceZombie::createFloatingAction()
 
 CCAction* SpaceZombie::createFlyAwayAction()
 {
-	CCRotateBy *action1 = CCRotateBy::create(0.2, 180.0, 180.0);
+	CCRotateBy *action1 = CCRotateBy::create(0.2f, 180.0f, 180.0f);
 	return CCRepeatForever::create(action1);
 }
 
@@ -390,4 +413,27 @@ void SpaceZombie::scoreChanged()
 		score = 10;
 	}
 	NOTIFY->postNotification(kScoreChangedMessage, CCInteger::create(score));
+}
+
+void SpaceZombie::performShocked()
+{
+	switch(m_state1)
+	{
+	case en_ZombieAttacking:
+	case en_ZombieMoving:
+		m_statae1old = m_state1;
+		m_state1 = en_ZombieStopped;
+		scheduleOnce(schedule_selector(SpaceZombie::recover), 10.0f);
+		break;
+	case en_ZombieDead:
+	case en_ZombieFlyAway:
+	case en_ZombieStopped:
+	default:
+		break;
+	}
+}
+
+void SpaceZombie::recover(float)
+{
+	m_state1 = m_statae1old;
 }

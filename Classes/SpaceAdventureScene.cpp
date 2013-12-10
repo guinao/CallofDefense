@@ -1,12 +1,10 @@
 #include "SpaceAdventureScene.h"
 #include "BootScene.h"
+#include "ParticleLayer.h"
 
 SpaceAdventureScene::SpaceAdventureScene()
 {
 	CC_SAFE_RETAIN(Shield::getShieldSingleton());
-
-	m_maxshakevalue = 0.0;
-	m_shakevaluebound = 10.0;
 }
 
 SpaceAdventureScene::~SpaceAdventureScene()
@@ -22,10 +20,20 @@ CCScene* SpaceAdventureScene::scene()
 		scene = CCScene::create();
 		CC_BREAK_IF(! scene);
 
-		SpaceAdventureScene* layer = SpaceAdventureScene::create();
-		CC_BREAK_IF(! layer);
 
-		scene->addChild(layer);
+		//ParticleLayer *layer1 = ParticleLayer::create();
+		//CC_BREAK_IF(! layer1);
+
+		Shield *layer2 = Shield::getShieldSingleton();
+		CC_BREAK_IF(! layer2);
+
+		SpaceAdventureScene* layer3 = SpaceAdventureScene::create();
+		CC_BREAK_IF(! layer3);
+
+		//scene->addChild(layer1, 100);
+		scene->addChild(layer2, 200);
+		scene->addChild(layer3, 300);
+
 	}while (0);
 
 	return scene;
@@ -39,11 +47,7 @@ bool SpaceAdventureScene::init()
 		CC_BREAK_IF(! CCLayer::init());
 		
 		CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
-//		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("PvZres2/peashooter.plist");
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("PvZres2/plants_type.plist");
 		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("PvZres2/zombies_type.plist");
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("PvZres2/plant_sun.plist");
-		CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("PvZres2/cardMenu.plist");
 
 		CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
 		m_score = 0;
@@ -52,9 +56,11 @@ bool SpaceAdventureScene::init()
 		m_label->setPosition(ccp(visibleSize.width/2, visibleSize.height-40));
 		this->addChild(m_label, 10, 1);
 
-		createShield();
+		m_batchnode = CCSpriteBatchNode::create("PvZres2/zombies_type.png");
+		addChild(m_batchnode);
+
 		createNut();
-		//createZombies();
+		m_shield = Shield::getShieldSingleton();
 
 		NOTIFY->addObserver(
 			this, 
@@ -74,8 +80,7 @@ bool SpaceAdventureScene::init()
 			kScoreChangedMessage,
 			NULL);
 
-		setAccelerometerEnabled(true);
-		scheduleUpdate();
+		srand(time(NULL));
 
 		bRet = true;
 	}while(0);
@@ -146,8 +151,8 @@ void SpaceAdventureScene::update(float delta)
 
 		if( !inVisibleRigion(zombierect) )
 		{
-//			m_zombies[i]->setVisible(false);
-			removeChild(m_zombies[i]);
+			m_batchnode->removeChild(m_zombies[i]->getSprite(), true);
+			removeChild(m_zombies[i], true);
 			continue;
 		}
 
@@ -163,6 +168,8 @@ void SpaceAdventureScene::update(float delta)
 			vz.push_back(m_zombies[i]);
 			break;
 		case en_ZombieDead:
+			m_batchnode->removeChild(m_zombies[i]->getSprite(), true);
+			removeChild(m_zombies[i], true);
 		case en_ZombieFlyAway:
 		default:
 			break;
@@ -174,10 +181,10 @@ void SpaceAdventureScene::update(float delta)
 	SpaceZombie *zombie = generateZombie();
 	if( NULL != zombie )
 	{
-		addChild(zombie,35);
+		m_batchnode->addChild(zombie->getSprite());
+		addChild(zombie);
 		m_zombies.push_back(zombie);
 	}
-
 }
 
 void SpaceAdventureScene::processCollide(SpaceNut* nut, SpaceZombie* zombie)
@@ -199,35 +206,44 @@ void SpaceAdventureScene::didAccelerate(CCAcceleration* pAccelerationValue)
 {
 	char output[128];
 
-	double x = pAccelerationValue->x;
-	double y = pAccelerationValue->y;
-	double z = pAccelerationValue->z;
+	double x = pAccelerationValue->x * 10.0;
+	double y = pAccelerationValue->y * 10.0;
+	double z = pAccelerationValue->z * 10.0;
 	double all = x*x + y*y + z*z;
 	all *= 100;
 	sprintf(output, "SpaceAdventureScene::didAccelerate:%f, %f, %f", x, y, z);
-	//CCLOG(output);
+	CCLOG(output);
 
-	m_nut->changeSpeedXBy(x*50);
-	m_nut->changeSpeedYBy(y*50);
-	if(all > 250)
+	m_nut->changeSpeedXBy(x*5);
+	m_nut->changeSpeedYBy(y*5);
+
+	CCDictionary *dict = CCDictionary::create();
+	float sr, sx, sy;
+	m_shield->getCenterAndRadius(sr, sx, sy);
+	dict->setObject(CCFloat::create(sx), "x");
+	dict->setObject(CCFloat::create(sy), "y");
+	NOTIFY->postNotification(kGravityShockMessage, dict);
+
+	if(z*z > 200.0)
 	{
 		for(int i=0; i<(int)m_zombies.size(); ++i)
 		{
-			//m_zombies[i]->setState1(en_ZombieStopped);
-			m_zombies[i]->unscheduleUpdate();
+			m_zombies[i]->performShocked();
 		}
-		scheduleOnce(schedule_selector(SpaceAdventureScene::restartAllZombies), 5.0f);
+//		scheduleOnce(schedule_selector(SpaceAdventureScene::restartAllZombies), 5.0f);
 	}
-	//m_zombiemanager->didAccelerate(pAccelerationValue, m_label);
 }
 
-//void SpaceAdventureScene::onEnter()
-//{
-//	CCLayer::onEnter();
-//}
-//
+void SpaceAdventureScene::onEnter()
+{
+	CCLayer::onEnter();
+	setAccelerometerEnabled(true);
+	scheduleUpdate();
+}
+
 void SpaceAdventureScene::onExit()
 {
+	unscheduleUpdate();
 	setAccelerometerEnabled(false);
 	NOTIFY->removeObserver(this, kScoreChangedMessage);
 	NOTIFY->removeObserver(this, kLoseMessage);
@@ -241,24 +257,10 @@ void SpaceAdventureScene::createNut()
 	addChild(m_nut,40);
 }
 
-void SpaceAdventureScene::createZombies()
-{
-	m_zombiemanager = ZombieManager::create();
-	addChild(m_zombiemanager, 30);
-}
-
-void SpaceAdventureScene::createShield()
-{
-	m_shield = Shield::getShieldSingleton();
-
-	addChild(m_shield);
-}
-
 SpaceZombie* SpaceAdventureScene::generateZombie()
 {
 	SpaceZombie *zombie = NULL;
-	srand(time(NULL));
-	if( m_zombies.size()<1 && rand()%200 < 200 )
+	if( m_zombies.size()<34 && rand()%200 < 200 )
 	{
 		ZombieType type = static_cast<ZombieType>(rand()%4+1);
 
@@ -302,8 +304,10 @@ void SpaceAdventureScene::updateScore(CCObject *pdata)
 	sprintf(msg, "%d", m_score);
 	m_label->setString(msg);
 
-	CCScaleBy *action1 = CCScaleBy::create(0.2f, 3.0f);
-	CCActionInterval *action2 = action1->reverse();
+	m_label->stopAllActions();
+	m_label->setScale(1.0f);
+	CCScaleTo *action1 = CCScaleTo::create(0.2f, 3.0f);
+	CCScaleTo *action2 = CCScaleTo::create(0.2f, 1.0f);
 	CCSequence* action = CCSequence::create(action1, action2, NULL);
 	m_label->runAction(action);
 }
@@ -312,7 +316,7 @@ void SpaceAdventureScene::restartAllZombies(float)
 {
 	for(int i=0; i<(int)m_zombies.size(); ++i)
 	{
-		//m_zombies[i]->setState1(en_ZombieMoving);
-		m_zombies[i]->scheduleUpdate();
+		m_zombies[i]->setState1(en_ZombieMoving);
+		//m_zombies[i]->scheduleUpdate();
 	}
 }

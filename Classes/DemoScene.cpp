@@ -63,14 +63,11 @@ bool DemoScene::init()
 
 		CC_BREAK_IF(! labForZombieManager());
 
-		labForTexture();
-		//labForSunShine();
+		labForSunShine();
 
 		//labForCCSprites();
 
 		//labForCCAnimation();
-
-		//labForCCScale9Sprite();
 
 		//this->schedule(schedule_selector(DemoScene::backToTollgateSelectScene), 3.0f);
 
@@ -121,37 +118,6 @@ void DemoScene::labForCCSprites()
 	plantnode1->addChild(plant3);
 
 	this->addChild(plantnode1);
-}
-
-//////////////////////////////////////////////////////////////////////////
-
-void DemoScene::labForCCScale9Sprite()
-{
-	CCTexture2D::PVRImagesHavePremultipliedAlpha(true);
-	CCSpriteFrameCache::sharedSpriteFrameCache()->addSpriteFramesWithFile("PvZres2/peashooter.plist");
-
-	char name[32];
-
-	CCScale9Sprite* peashooter = CCScale9Sprite::createWithSpriteFrameName("peashooter001.png");
-	peashooter->setPosition(ccp(200, 200));
-	CCSize size = peashooter->getContentSize();
-	peashooter->setContentSize(CCSize(size.width*2, size.height*2));
-	this->addChild(peashooter);
-
-	CCArray* animFrames = CCArray::createWithCapacity(13);
-	for(int i=1; i<=13; ++i)
-	{
-		sprintf(name, "peashooter%03d.png", i);
-		CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(name);
-		animFrames->addObject(frame);
-	}
-	CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames, 0.1f);
-	animation->setLoops(-1);
-
-	//peashooter->runAction(CCAnimate::create(animation));
-
-	CCSpriteFrameCache::sharedSpriteFrameCache()->removeSpriteFrameByName("PvZres2/peashooter.plist");
-
 }
 
 //////////////////////////////////////////////////////////////////////////

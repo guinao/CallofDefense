@@ -30,6 +30,9 @@ public:
 	float getSpeedY(){	return m_speed * m_direction.y;	};
 	float getWeight(){	return m_weight;	};
 	void setState1(ZombieState s){	m_state1 = s;	};
+	CCSprite* getSprite(){	return m_sprite;	};
+
+	void performShocked();
 //	CCRect myBoundingBox();
 //	void onHurt(int hurt, float xspeed, float yspeed);
 
@@ -38,6 +41,8 @@ private:
 	void performMove(float delta);
 	void performFlyAway(float delta);
 	void performAttacking(float delta);
+	void performDead();
+	void finishDeadAction();
 
 	CCAction* createWalkingAction();
 	CCAction* createFloatingAction();
@@ -46,9 +51,11 @@ private:
 	void updateState2();
 	void updateFacing();
 	void scoreChanged();
+	void recover(float);
 
 	CCSprite* m_sprite;
 	ZombieType m_type;
+	ZombieState m_statae1old;
 	ZombieState m_state1;
 	StateInSpace m_state2;
 

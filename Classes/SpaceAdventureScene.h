@@ -20,7 +20,7 @@ public:
 	static CCScene* scene();
 	CREATE_FUNC(SpaceAdventureScene);
 	virtual bool init();
-	//virtual void onEnter();
+	virtual void onEnter();
 	virtual void onExit();
 
 	virtual void didAccelerate(CCAcceleration* pAccelerationValue);
@@ -28,25 +28,18 @@ public:
 
 private:
 	void createNut();
-	void createZombies();
-	void createShield();
 	SpaceZombie* generateZombie();
 	void processCollide(SpaceNut* nut, SpaceZombie* zombie);
 	void restartAllZombies(float);
 	void loseGame(CCObject*);
 	void winGame(CCObject*);
 	void updateScore(CCObject *pdata);
-
-	ZombieManager *m_zombiemanager;
-	SpaceNut *m_nut;
-
-	double m_maxshakevalue;
-	double m_shakevaluebound;
-	int m_generateSeed;
+	CCSpriteBatchNode *m_batchnode;
 
 	int m_score;
 	CCLabelAtlas* m_label;
 
+	SpaceNut *m_nut;
 	vector<SpaceZombie*> m_zombies;
 	Shield* m_shield;
 };

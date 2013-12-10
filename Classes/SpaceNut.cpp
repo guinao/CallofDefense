@@ -32,26 +32,19 @@ bool SpaceNut::init()
 	CCSize size = CCDirector::sharedDirector()->getVisibleSize();
 	m_sprite->setPosition(ccp(size.width/2, size.height/2));
 	
-	CCArray* animFrames = CCArray::createWithCapacity(numFrames);
-	for(int i=1; i<=numFrames/*magic number*/; ++i)
-	{
-		sprintf(picture, "%s%03d.png", name, i);
-		CCSpriteFrame* frame = CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(picture);
-		animFrames->addObject(frame);
-	}
-	CCAnimation* animation = CCAnimation::createWithSpriteFrames(animFrames, 0.1f);
-	CCAnimate* animate = CCAnimate::create(animation);
-//	m_sprite->runAction(CCRepeatForever::create(animate));
-
-//	m_sprite->setScale(1.5f);
-
 	addChild(m_sprite, 20);
 	
+	//CCParticleSystem *m_nuttrace = new CCParticleSystemQuad();
+	//m_nuttrace->retain();
+	//m_nuttrace->initWithFile("Particles/Phoenix.plist");
+	//m_nuttrace->setVisible(true);
+	//m_sprite->addChild(m_nuttrace);
+
 	scheduleUpdate();
 
 	NOTIFY->addObserver(this,
 		callfuncO_selector(SpaceNut::recvShieldPosition),
-		kShieldPostionChanged,
+		kShieldPostionChangedMessage,
 		NULL
 		);
 	bRet = true;
@@ -119,13 +112,17 @@ void SpaceNut::update(float delta)
 		break;
 	}
 
-
-
+	CCDictionary *dict = CCDictionary::create();
+	float x = m_sprite->getPositionX();
+	float y = m_sprite->getPositionY();
+	dict->setObject(CCFloat::create(x), "x");
+	dict->setObject(CCFloat::create(y), "y");
+	NOTIFY->postNotification(kNutPostionChangedMessage, dict);
 }
 
 void SpaceNut::onExit()
 {
-	NOTIFY->removeObserver(this, kShieldPostionChanged);
+	NOTIFY->removeObserver(this, kShieldPostionChangedMessage);
 }
 
 void SpaceNut::moveInShield(float delta)
@@ -206,9 +203,9 @@ void SpaceNut::recvShieldPosition(CCObject *pData)
 	//CCLOG("I got the message");
 	CCDictionary *dict = dynamic_cast<CCDictionary*>(pData);
 
-	m_shieldpos[0] = dynamic_cast<CCFloat*>(dict->objectForKey(0))->getValue();
-	m_shieldpos[1] = dynamic_cast<CCFloat*>(dict->objectForKey(1))->getValue();
-	m_shieldpos[2] = dynamic_cast<CCFloat*>(dict->objectForKey(2))->getValue();
+	m_shieldpos[0] = dynamic_cast<CCFloat*>(dict->objectForKey("r"))->getValue();
+	m_shieldpos[1] = dynamic_cast<CCFloat*>(dict->objectForKey("x"))->getValue();
+	m_shieldpos[2] = dynamic_cast<CCFloat*>(dict->objectForKey("y"))->getValue();
 }
 
 void SpaceNut::hit(float v1x, float v1y, float m1)

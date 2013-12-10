@@ -10,8 +10,6 @@
 #include "SunShine.h"
 #include "Plant.h"
 
-
-using namespace cocos2d::extension;
 USING_NS_CC;
 
 class DemoScene : public CCLayer {
@@ -32,7 +30,6 @@ private:
 	void backToTollgateSelectScene(float dt);
 	void labForCCSprites();
 	void labForCCAction();
-	void labForCCScale9Sprite();
 	void labForCCAnimation();
 	void labForPlantManager();
 	void labForSunShine();
