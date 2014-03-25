@@ -1,0 +1,151 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AppDelegate" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACAAAAAAAAACAAQAAAEAAAAAAAAAAAAg=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\AppDelegate.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BootScene" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAIImAAAABAIAAhACAQGEACA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\BootScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DemoScene" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CQAAAAAQABAgiAgoAwAAEJkAAAAgABIEABAAAAAGAAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\DemoScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ParticleLayer" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAgAEAwACAQgAADBiAEAAAAAIAABAAABCEAAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\ParticleLayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Plant" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAQIBAAAAABQAAAAwAAAEAgIBBAAACAAAAAAAEECAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\Plant.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PlantManager" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAEACCAAAAAAABAIAAAAAAIAABAAAAAEAAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\PlantManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Shield" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAAAIACCEJAAAAAkLMABKkABJAAhIAABgCAIyUAAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\Shield.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceAdventureScene" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIIAAAgAAAAAQIgIgAAEJgCAEgAAEIAABAAAACEgQA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\SpaceAdventureScene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceNut" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAIQAAABAggBAQCABFAwEAASCAJBBBAAwAAEAAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\SpaceNut.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SpaceZombie" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAIAAEIQIQCggJQRAABEApCAJAQgIlIAAAAAAEEAQ=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\SpaceZombie.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SunShine" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AIAAAAAAAAAAAAgAAAAAAAAAAAQAAAAAgAABABAAAEA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\SunShine.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TouchLayer" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAAAABAAJAAAAAAAAIAABAAAACEAQA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\TouchLayer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Zombie" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgIBIAEEABAAAAAYAABUAgIBBAAACAAAAAAQAECBA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\Zombie.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ZombieManager" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAiAAAAQQQIAAAEAAACAAAAAJAgJAAAAAEAIA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\ZombieManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="PlantType" Collapsed="true">
+    <Position X="4" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAAABAAAAACAAABgAAAAAAAAAAAAAAEAAAIAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\EnumPlantType.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="PlantState" Collapsed="true">
+    <Position X="2.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAAAACAAAAAAAAAAAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\EnumPlantType.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ZombieType" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAgAAAAAAAAAAAAAAAQAABAAAAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\EnumPlantType.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ZombieState" Collapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAEAMAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\EnumPlantType.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GameState" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAgAAAAAAgAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\EnumPlantType.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="StateInSpace" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\EnumPlantType.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="ShieldState" Collapsed="true">
+    <Position X="5.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIAAAAAAAAAAAgAAAAAAAQAAAAAAAAAAA=</HashCode>
+      <FileName>E:\Programs\cocos2d-2.1beta3-x-2.1.1\CallofDefense\CallofDefense\Classes\EnumPlantType.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

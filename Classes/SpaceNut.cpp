@@ -160,11 +160,11 @@ void SpaceNut::moveInShield(float delta)
 		m_sprite->setPosition(current);
 	}
 
-	m_speedx *= 0.5;
-	m_speedy *= 0.5;
+// 	m_speedx *= 0.5;
+// 	m_speedy *= 0.5;
 
-//	m_speedx = 0.0f;
-//	m_speedy = 0.0f;
+	m_speedx = 0.0f;
+	m_speedy = 0.0f;
 }
 
 void SpaceNut::moveInSpace(float delta)

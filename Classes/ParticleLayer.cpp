@@ -47,6 +47,8 @@ void ParticleLayer::onEnter()
 		kGravityShockMessage,
 		NULL);
 
+	m_shieldtracer->setPosition(ccp(size.width/2, size.height/2));
+
 	scheduleUpdate();
 }
 
